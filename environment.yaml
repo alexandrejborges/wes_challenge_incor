@@ -1,0 +1,21 @@
+name: wes_qc_env        # Nome do ambiente Conda
+
+channels:               # Onde procurar os pacotes (ordem importa!)
+  - bioconda            # Para ferramentas bioinformáticas
+  - conda-forge         # Para pacotes gerais (ex: Python, R, utilitários)
+  - defaults            # Canal padrão da Anaconda
+
+dependencies:           # Lista de ferramentas/libraries a instalar
+  - python=3.10         # Versão específica do Python
+  - samtools            # Para manipulação de arquivos CRAM/BAM
+  - bedtools            # Para cálculos genômicos com BED
+  - mosdepth            # Para cálculo de cobertura
+  - verifybamid2        # Para estimar contaminação
+  - snakemake           # Para automatizar o pipeline
+  - r-base              # Ambiente R
+  - r-ggplot2           # Visualizações no R
+  - r-dplyr             # Manipulação de dados no R
+  - r-tidyr             # Organização de dados no R
+  - r-readr             # Leitura de arquivos no R
+  - r-optparse          # Parsing de argumentos em scripts R
+
