@@ -1,0 +1,13 @@
+*.sam
+*.bam
+*.cram
+*.crai
+*.log
+*.tmp
+*.out
+*.vcf
+*.idx
+*.fastq
+*.gz
+*.zip
+__pycache__/
