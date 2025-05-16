@@ -1,0 +1,11 @@
+name: verifybamID_env
+
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+
+dependencies:
+  - verifybamid2
+  - samtools
+
