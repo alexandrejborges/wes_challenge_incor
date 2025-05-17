@@ -12,9 +12,9 @@ dependencies:           # Lista de ferramentas/libraries a instalar
   - mosdepth            # Para cálculo de cobertura
   - verifybamid2        # Para estimar contaminação
   - snakemake           # Para automatizar o pipeline
-  - r-base              # Ambiente R
-  - r-ggplot2           # Visualizações no R
-  - r-dplyr             # Manipulação de dados no R
-  - r-tidyr             # Organização de dados no R
-  - r-readr             # Leitura de arquivos no R
-  - r-optparse          # Parsing de argumentos em scripts R
+  - r-base              # Ambiente R
+  - r-ggplot2           # Visualizações no R
+  - r-dplyr             # Manipulação de dados no R
+  - r-tidyr             # Organização de dados no R
+  - r-readr             # Leitura de arquivos no R
+  - r-optparse          # Parsing de argumentos em scripts

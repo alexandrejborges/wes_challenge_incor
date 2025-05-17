@@ -1,4 +1,5 @@
 #!/usr/bin/env Rscript
+
 # Load the necessary library explicitly
 library(ggplot2)
 library(readr)
@@ -14,22 +15,23 @@ if (length(args) != 1) {
 }
 sample_name <- args[1]
 
-# Construct the input file path based on the repository structure
-coverage_file <- file.path("results", paste0(sample_name, ".mosdepth.summary.txt"))
-
-# Thresholds for sex inference
-x_female_lower_threshold <- 0.8
-x_male_upper_threshold <- 0.6
-y_male_lower_threshold <- 0.1
-
 # Output directory for results
 output_dir <- "results"
 if (!dir.exists(output_dir)) {
   dir.create(output_dir)
 }
+
+# Define o arquivo de log com o nome da amostra
+log_file <- file.path(output_dir, paste0(sample_name, "_chrXY_coverage.log"))
 output_plot_file <- file.path(output_dir, paste0(sample_name, "_chrXY_coverage.png"))
 
+# Inicia o redirecionamento da saída para o arquivo de log
+log_con <- file(log_file, open = "wt")
+sink(log_con)
+sink(log_con, type = "message")
+
 # ====== Read the coverage file ======
+coverage_file <- file.path("results", paste0(sample_name, ".mosdepth.summary.txt"))
 df <- read.table(coverage_file, header = TRUE, sep = "\t", comment.char = "#", stringsAsFactors = FALSE)
 
 # ====== Filter main chromosomes ======
@@ -46,6 +48,12 @@ coverage_Y <- df_filt[df_filt$chrom == "chrY", "mean"]
 # Normalized ratios
 relative_X <- coverage_X / mean_autosomes
 relative_Y <- coverage_Y / mean_autosomes
+
+# Thresholds for sex inference
+x_female_lower_threshold <- 0.8
+x_male_upper_threshold <- 0.6
+y_male_lower_threshold <- 0.1
+
 
 # Sex inference
 if (relative_X >= x_female_lower_threshold && relative_Y < y_male_lower_threshold) {
@@ -114,3 +122,8 @@ chr_cover_plot <- ggplot(df_plot, aes(x = chrom_clean, y = mean, fill = tipo)) +
 ggsave(output_plot_file, chr_cover_plot, width = 10, height = 6)
 
 cat("Plot saved to:", output_plot_file, "\n")
+
+# Restaura a saída para o terminal
+sink()
+sink(type = "message")
+close(log_con)
