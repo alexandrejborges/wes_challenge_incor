@@ -94,7 +94,7 @@ wes_challenge_incor/
 ├── logs/   
 
 **Execução:**  
-bash scripts/coverage_mosdepth.sh
+scripts/coverage_mosdepth.sh
 
 **Saídas esperadas:**  
 results/NA06994.regions.bed.gz: Profundidade por região exônica  
