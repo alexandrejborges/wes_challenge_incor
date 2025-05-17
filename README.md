@@ -37,6 +37,8 @@ wes_challenge_incor/
 ├── results/                                         
 └── scripts/      
 
+**Descrição:**
+
 **data/**: Contém os dados de entrada utilizados no pipeline, incluindo arquivos .cram, .bam, .vcf, .bed e o genoma de referência em formato .fa.  
 **environment.yaml**: Arquivo para criação do ambiente Conda principal, com as dependências gerais do pipeline (R, mosdepth, samtools etc.).  
 **environment_verifybamid.yaml**: Ambiente específico contendo apenas os pacotes necessários para execução do verifyBamID2.  
@@ -46,7 +48,7 @@ wes_challenge_incor/
 
 ---
 ## Etapa 0 — Download dos arquivos necessários:
-Para a execução deste pipeline, foram necessários três arquivos públicos obtidos a partir de repositórios oficiais. Os arquivos foram baixados e armazenados na pasta data/.
+Para a execução deste pipeline, foram necessários três arquivos públicos obtidos a partir de repositórios oficiais. Os arquivos foram baixados e armazenados no diretório data/.
 
 **Ambiente:**  
 wes_qc_env
@@ -56,8 +58,8 @@ scripts/download_dados.sh
 
 **Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
 **Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
-**Arquivo de regiões exônicas (.bed):**[hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
-**Genoma de referência (.fa):**[GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)
+**Arquivo de regiões exônicas (.bed):** [hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
+**Genoma de referência (.fa):** [GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)
 
 A integridade dos arquivos baixados foi realizada por meio da comparação de seus hashes MD5 com as respectivas impressões digitais:
 
@@ -66,18 +68,18 @@ A integridade dos arquivos baixados foi realizada por meio da comparação de se
 **Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
 
 **Resultaddos gerados na amostra NA06994 [log.file](logs/download_log.txt):**  
-Verificando integridade dos arquivos com MD5...
-NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK
-NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK
-hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK
+Verificando integridade dos arquivos com MD5...  
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK  
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK  
+hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK  
 Download, indexação e verificação concluídos com sucesso!
 
 ---
 ## Etapa 1 — Análise de Cobertura do Exoma
-Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software Mosdepth e a análise exploratória dos resultados em R.  
+Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software _Mosdepth_ e a análise exploratória dos resultados em R.  
 
 ### 1.1 — Cálculo de Cobertura com Mosdepth
-O cálculo da cobertura das regiões exônicas foi realizado com o software Mosdepth, utilizando como entrada o arquivo _.cram_ da amostra, o arquivo _.bed_ com as regiões-alvo do exoma e o genoma de referência completo (incluindo decoy e regiões HLA).
+O cálculo da cobertura das regiões exônicas foi realizado com o software _Mosdepth_, utilizando como entrada o arquivo _.cram_ da amostra, o arquivo _.bed_ com as regiões-alvo do exoma e o genoma de referência completo (incluindo decoy e regiões HLA).
 
 A execução foi feita via script _coverage_mosdepth.sh_, que inclui a instrução set -e para interromper automaticamente o pipeline em caso de erro, garantindo a integridade da análise.
 
@@ -88,9 +90,8 @@ wes_qc_env
 scripts/coverage_mosdepth.sh
 
 **Requisitos:**  
-Mosdepth  
-Arquivo CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
-Índice CRAI correspondente  
+_Mosdepth_   
+Arquivo CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram e .crai correspondente    
 Referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
 Regiões-alvo: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
 
