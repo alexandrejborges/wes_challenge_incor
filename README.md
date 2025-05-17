@@ -1,13 +1,13 @@
-# WES-QC: Whole Exome Sequencing Quality Control Pipeline
+# WES-QC: Pipeline de Controle de Qualidade para Exoma Completo
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)  
-Bioinformatic challenge : Automated quality control pipeline for Whole Exome Sequencing (WES) data - Desafio Técnico Bioinformata
+Desafio Técnico em Bioinformática: Pipeline automatizado de controle de qualidade para dados de sequenciamento de exoma completo (WES)
 
-## Author
+## Autor
 👨🏽‍💻 Alexandre Junio Borges Araujo  
 📧 alexandrejunio@usp.br  
 ▶️ [Linkedin/Alexandre_Borges](https://www.linkedin.com/in/alexandre-borges-57bb14150/)
 
-# WES Quality Control Pipeline
+## Descrição do Projeto
 
 Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequencing (WES), com foco no cálculo de cobertura, inferência de sexo genético e estimativa de contaminação. Este projeto faz parte de um desafio técnico com base na amostra NA06994 do 1000 Genomes Project.
 
