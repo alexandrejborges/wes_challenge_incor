@@ -65,7 +65,7 @@ A integridade dos arquivos baixados foi realizada por meio da comparação de se
 **Arquivo .cram.crai:** 15a6576f46f51c37299fc004ed47fcd9  
 **Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
 
-**Resultaddos gerados na amostra NA06994 [log.file](logs/download_log.txt):** 
+**Resultaddos gerados na amostra NA06994 [log.file](logs/download_log.txt):**  
 Verificando integridade dos arquivos com MD5...
 NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK
 NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK
