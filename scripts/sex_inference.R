@@ -1,5 +1,25 @@
 #!/usr/bin/env Rscript
 
+
+# =============================================================
+# Script Name: sex_inference.R
+# Author: Alexandre J. Borges
+# Last Modified: 2025-05-17
+# Description:
+#   This script performs genetic sex inference based on coverage 
+#   statistics of chrX and chrY from a mosdepth summary file.
+#   It calculates relative coverage values compared to autosomes,
+#   classifies the sample into a probable sex category,
+#   and generates a bar plot of average coverage per chromosome.
+#
+#   Input:
+#     - results/<sample>.mosdepth.summary.txt
+#
+#   Output:
+#     - results/<sample>_chrXY_coverage.png
+#     - results/<sample>_chrXY_coverage.log
+# =============================================================
+
 # Load the necessary library explicitly
 library(ggplot2)
 library(readr)
@@ -7,7 +27,6 @@ suppressPackageStartupMessages(library(dplyr))
 library(stringr)
 
 
-# ====== Parameters ======
 # Get the sample name from the command line argument
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 1) {
@@ -21,20 +40,19 @@ if (!dir.exists(output_dir)) {
   dir.create(output_dir)
 }
 
-# Define o arquivo de log com o nome da amostra
 log_file <- file.path(output_dir, paste0(sample_name, "_chrXY_coverage.log"))
 output_plot_file <- file.path(output_dir, paste0(sample_name, "_chrXY_coverage.png"))
 
-# Inicia o redirecionamento da saída para o arquivo de log
+# Start redirecting output to the log file
 log_con <- file(log_file, open = "wt")
 sink(log_con)
 sink(log_con, type = "message")
 
-# ====== Read the coverage file ======
+# Read the coverage file
 coverage_file <- file.path("results", paste0(sample_name, ".mosdepth.summary.txt"))
 df <- read.table(coverage_file, header = TRUE, sep = "\t", comment.char = "#", stringsAsFactors = FALSE)
 
-# ====== Filter main chromosomes ======
+# Filter main chromosomes
 df_filt <- df[grep("^chr[0-9XY]+$", df$chrom), ]
 
 # Average coverage of autosomes
@@ -76,7 +94,7 @@ cat("chrX coverage:", round(coverage_X, 2), "(", round(relative_X, 2), "x autoso
 cat("chrY coverage:", round(coverage_Y, 2), "(", round(relative_Y, 2), "x autosomes)\n")
 cat("Inferred sex:", inferred_sex, "\n")
 
-# Plotting with ggplot2 (without loading the entire tidyverse)
+# Plotting with ggplot2
 df_plot <- mutate(
   df_filt,
   tipo = case_when(
@@ -123,7 +141,7 @@ ggsave(output_plot_file, chr_cover_plot, width = 10, height = 6)
 
 cat("Plot saved to:", output_plot_file, "\n")
 
-# Restaura a saída para o terminal
+# Save the log
 sink()
 sink(type = "message")
 close(log_con)
