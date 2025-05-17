@@ -5,7 +5,7 @@ Bioinformatic challenge : Automated quality control pipeline for Whole Exome Seq
 ## Author
 👨🏽‍💻 Alexandre Junio Borges Araujo  
 📧 alexandrejunio@usp.br  
-▶️ LinkedIn: https://www.linkedin.com/in/alexandre-borges-57bb14150/
+▶️ [Linkedin/Alexandre_Borges](https://www.linkedin.com/in/alexandre-borges-57bb14150/)
 
 # WES Quality Control Pipeline
 
@@ -26,11 +26,11 @@ wes_challenge_incor/
 ├── environment.yaml             
 ├── environment_verifybamid.yaml  
 ├── logs/                        
-├── results/                      
-├── scripts/                   
-└── README.md                       
+├── results/                                         
+└── scripts/                       
 
 **onde:**  
+
 **data/**: Contém os dados de entrada utilizados no pipeline, incluindo arquivos .cram, .bam, .vcf, .bed e o genoma de referência em formato .fa.  
 **environment.yaml**: Arquivo para criação do ambiente Conda principal, com as dependências gerais do pipeline (R, mosdepth, samtools etc.).  
 **environment_verifybamid.yaml**: Ambiente específico contendo apenas os pacotes necessários para execução do verifyBamID2.  
@@ -39,11 +39,121 @@ wes_challenge_incor/
 **scripts/**: Scripts automatizados em Bash e R responsáveis por cada etapa da análise (download, cobertura, conversão, visualização etc.).  
 **README.md**: Documento com instruções, estrutura e explicações sobre o funcionamento e execução do pipeline.
 
-## Criação dos ambientes necessários  
+## Configuração dos ambientes necessários  
 * [environment.yaml](environment.yaml) — Ambiente principal  
 * [environment_verifybamid.yaml](environment_verifybamid.yaml) — Ambiente para uso do verifyBamID
   
 Foi criado um ambiente exclusivo para usar o verifybamID devido sua necessidade de depêndencias específicas que podem conflitar com as utilizadas no ambiente principal.
+
+---
+## Etapa 0 — Download dos arquivos necessários:
+Para a execução deste pipeline, foram necessários três arquivos públicos obtidos a partir de repositórios oficiais. Esses arquivos são essenciais para garantir a padronização e a reprodutibilidade das análises:  
+
+**Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
+**Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
+**Arquivo de regiões exônicas (.bed):**[hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
+
+Os arquivos foram baixados de repositórios públicos e utilizados como entrada para as etapas de cálculo de cobertura e análise exploratória.
+
+---
+## Etapa 1 — Análise de Cobertura do Exoma
+Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software Mosdepth e a análise exploratória dos resultados em R.  
+
+### 1.1 — Cálculo de Cobertura com Mosdepth
+O cálculo da cobertura das regiões exônicas foi realizado com o software Mosdepth, utilizando como entrada o arquivo _.cram_ da amostra, o arquivo _.bed_ com as regiões-alvo do exoma e o genoma de referência completo (incluindo decoy e regiões HLA).
+
+A execução foi feita via script _coverage_mosdepth.sh_, que inclui a instrução set -e para interromper automaticamente o pipeline em caso de erro, garantindo a integridade da análise.
+
+**Ambiente:**  
+wes_qc_env
+
+**Script:**  
+scripts/coverage_mosdepth.sh
+
+**Requisitos:**  
+Mosdepth  
+Arquivo CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
+Índice CRAI correspondente  
+Referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
+Regiões-alvo: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
+
+**Estrutura Esperada para Execução:**  
+wes_challenge_incor/  
+├── data/  
+│   ├── NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram       
+│   ├── NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai   
+│   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa               
+│   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa.fai           
+│   └── hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed  
+│  
+├── scripts/  
+│   └── coverage_mosdepth.sh  
+│  
+├── results/  
+│  
+├── logs/   
+
+**Execução:**  
+scripts/coverage_mosdepth.sh
+
+**Saídas esperadas:**  
+results/NA06994.regions.bed.gz: Profundidade por região exônica  
+results/NA06994.mosdepth.summary.txt: Estatísticas resumidas de cobertura  
+logs/cobertura_mosdepth.log: Log de execução  
+
+**Resultaddos gerados na amostra NA06994:**    
+[Mon May 12 21:17:52 -03 2025] Iniciando cálculo de cobertura com mosdepth...  
+Usando 4 threads e referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
+[Mon May 12 21:20:04 -03 2025] Cálculo de cobertura concluído com sucesso.  
+
+### 1.2 — Análise Exploratória da Cobertura
+A análise exploratória foi realizada com funções nativas da linguagem R, utilizando como entrada o arquivo .bed.gz gerado pelo Mosdepth. O script calcula métricas estatísticas de cobertura e gera uma visualização gráfica da distribuição dos dados.
+
+**Ambiente:**  
+wes_qc_env
+
+**Script:**  
+scripts/exploratory_analysis_coverage.R
+
+**Requisitos:**  
+R ≥ 4.0  
+Pacotes: readr, dplyr, stringr, ggplot2  
+Arquivo de entrada: results/NA06994.regions.bed.gz
+
+**Estrutura Esperada para Execução:**  
+wes_challenge_incor/  
+├── results/  
+│   └── NA06994.regions.bed.gz  
+│  
+├── scripts/  
+│   └── exploratory_analysis_coverage.R  
+│  
+├── logs/         
+
+**Execução:**
+Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz
+
+**Saídas esperadas:**
+results/exploratory_analysis_coverage.csv  
+results/histogram_coverage.png  
+logs/exploratory_analysis_coverage.log  
+
+**Resultaddos gerados na amostra NA06994:**  
+[INFO] Loading input file: ../results/NA06994.regions.bed.gz  
+[INFO] Calculating coverage statistics...  
+[INFO] Summary written to: ../results/exploratory_analysis_coverage.csv  
+========== Coverage Summary ==========  
+metric      
+Mean Depth:   64.16930  
+Minimum Depth:    0.00000  
+Maximum Depth: 3371.81000  
+Regions with Coverage ≥ 10x (%):   71.76290  
+Regions with Coverage ≥ 30x (%):   61.21708  
+
+![Cobertura por cromossomo - NA06994](results/histogram_coverage.png)  
+
+**CONCLUSÃO:**  
+A amostra apresentou uma profundidade média de 64,17×, indicando cobertura robusta para análise de variantes em regiões exônicas. Além disso, 71,76% das regiões apresentaram cobertura igual ou superior a 10×, e 61,22% foram cobertas por pelo menos 30×, valores que indicam boa qualidade para chamadas de variantes com alta confiança. Apesar de adequada, a cobertura não é uniforme, o que reforça a importância de avaliar graficamente a distribuição.
 
 ---
 ## Etapa 2 — Inferência do Sexo Genético
@@ -73,13 +183,15 @@ x_female_lower_threshold <- 0.8
 x_male_upper_threshold <- 0.6  
 y_male_lower_threshold <- 0.1  
 
-**Estrutura:**  
+**Estrutura Esperada para Execução:**  
+wes_challenge_incor/  
 ├── results/  
-│   ├── NA06994.mosdepth.summary.txt  
-│   ├── NA06994_chrXY_coverage.png  
+│   └── NA06994.mosdepth.summary.txt   
+│  
+├── scripts/  
+│   └── sex_inference.R    
 │  
 ├── logs/  
-│   └── NA06994_chrXY_coverage.log
 
 **Execução:**  
 Rscript scripts/sex_inference.R <sample_name>
@@ -97,7 +209,8 @@ chrX coverage: 1.44 ( 0.49 x autosomes)
 chrY coverage: 0.66 ( 0.23 x autosomes)  
 Inferred sex: Male (XY)  
 
-**CONCLUSÃO:** A razão de cobertura X/A de 0,5 indica a presença de um único cromossomo X, enquanto a razão Y/A, ainda que baixa, sugere a presença do cromossomo Y. Com base nesses dados, conclui-se que a amostra é proveniente de um indivíduo com sexo genético masculino.
+**CONCLUSÃO:**  
+A razão entre a cobertura do cromossomo X e os autossomos foi de 0,49, indicando a presença de apenas um cromossomo X. A cobertura observada no cromossomo Y foi de 0,23× em relação aos autossomos, sugerindo a presença do cromossomo Y. Com base nesses valores, a amostra NA06994 foi classificada como tendo sexo genético masculino (XY).
 
 ---
 ## Etapa 3 — Verificação de Contaminação
@@ -109,7 +222,7 @@ Como o verifyBamID necessita de arquivos .bam. Foram realizados os dois processo
 
 Todos os scripts estão organizados no diretório scripts/. As saídas são organizadas em logs/ e results/.
 
-### 3.1 Conversão de CRAM para BAM
+### 3.1 — Conversão de CRAM para BAM
 Arquivos .cram de amostras de exoma são convertidos para .bam com uso de referência genômica completa. Cada .bam é também indexado (.bai) e os logs são salvos separadamente.
 
 **Ambiente:**  
@@ -120,18 +233,22 @@ scripts/convert_cram_to_bam.sh
 
 **Requisitos:**  
 samtools ≥ v1.10  
+Arquivo CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram   
 Arquivo FASTA de referência com .fai (ex: GRCh38_full_analysis_set_plus_decoy_hla.fa)
 
-**Estrutura:**  
+**strutura Esperada para Execução:**  
+wes_challenge_incor/  
 ├── data/  
-│   ├── NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
-│   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa  
-│   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa.fai  
-│   ├── NA06994.bam  
-│   └── NA06994.bam.bai  
+│   ├── NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram      
+│   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa              
+│   └── GRCh38_full_analysis_set_plus_decoy_hla.fa.fai         
 │  
-├── logs/  
-│   └── NA06994_convert.log
+├── scripts/  
+│   └── convert_cram_to_bam.sh                               
+│  
+├── results/                                                    
+│  
+├── logs/      
 
 **Execução:**   
 ./scripts/convert_cram_to_bam.sh
@@ -140,8 +257,13 @@ Arquivo FASTA de referência com .fai (ex: GRCh38_full_analysis_set_plus_decoy_h
 * data/<sample>.bam
 * data/<sample>.bam.bai
 * logs/<sample>_convert.log
-  
-### 3.2 Verificação de Contaminação com verifyBamID
+
+**Arquivos gerados na amostra NA06994:**
+* NA06994.bam   
+* NA06994.bam.bai
+* NA06994_convert.log
+
+### 3.2 — Verificação de Contaminação com verifyBamID
 Utiliza verifyBamID para estimar contaminação com base em variantes de um VCF de referência populacional. Utiliza também um arquivo .bed das regiões exônicas.
 
 **Ambiente:**  
@@ -150,21 +272,28 @@ verifybamID_env
 **Script:**  
 scripts/contamination_verifybamid.sh
 
-**Estrutura:**  
+**Requisitos:**
+* verifyBamID ≥ v1.1.3  
+* Arquivo BAM: data/NA06994.bam  
+* Arquivo .bai: data/NA06994.bam.bai  
+* Arquivo VCF filtrado com variantes bialélicas comuns: data/hapmap_filtered.vcf.gz  
+* Índice .csi do VCF: data/hapmap_filtered.vcf.gz.csi  
+* Arquivo BED com regiões-alvo do exoma (opcional, se usado no script):   
+
+**Estrutura Esperada para Execução:**  
+wes_challenge_incor/  
 ├── data/  
-│   ├── NA06994.bam  
-│   ├── NA06994.bam.bai  
-│   ├── hapmap_filtered.vcf.gz  
-│   ├── hapmap_filtered.vcf.gz.csi  
-│   ├── hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed  
-│   └── GRCh38_full_analysis_set_plus_decoy_hla.fa  
+│   ├── NA06994.bam                            
+│   ├── NA06994.bam.bai                         
+│   ├── hapmap_filtered.vcf.gz                   
+│   ├── hapmap_filtered.vcf.gz.csi                
 │  
-├── results/  
-│   ├── NA06994_verifybam.selfSM  
-│   └── NA06994_verifybam.depthSM  
+├── scripts/  
+│   └── contamination_verifybamid.sh            
 │  
-├── logs/  
-│   └── verifybamid_NA06994.log
+├── results/                                    
+│  
+├── logs/      
 
   
 **Execução:**  
@@ -180,7 +309,8 @@ NA06994_verifybam.depthSM: Este arquivo registra a profundidade de cobertura (DP
 
 NA06994_verifybam.selfSM: Este arquivo contém as estimativas de contaminação genômica e ancestralidade da amostra, com base na comparação entre o BAM analisado e o painel de variantes de referência (VCF). A coluna _FREEMIX_ determina a fração estimada de contaminação.  
 
-**CONCLUSÃO:** O valor de _FREEMIX_ foi de 0.00035, indicando uma contaminação praticamente nula
+**CONCLUSÃO:**  
+A amostra NA06994 apresentou uma estimativa de contaminação (_FREEMIX_) de 0,00035, ou seja, 0,035%. Esse valor está muito abaixo do limite de tolerância geralmente aceito (2%), indicando que não há evidência de contaminação significativa na amostra. Portanto, os dados podem ser considerados confiáveis para análises genômicas subsequentes.
 
 ---
 ## Referências:
