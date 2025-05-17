@@ -26,9 +26,8 @@ wes_challenge_incor/
 ├── environment.yaml             
 ├── environment_verifybamid.yaml  
 ├── logs/                        
-├── results/                      
-├── scripts/                   
-└── README.md                       
+├── results/                                         
+└── scripts/                       
 
 **onde:**  
 
