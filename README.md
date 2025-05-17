@@ -1,13 +1,13 @@
-# WES-QC: Whole Exome Sequencing Quality Control Pipeline
+# WES-QC: Pipeline de Controle de Qualidade para Sequenciamento de Exoma Completo
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)  
-Bioinformatic challenge : Automated quality control pipeline for Whole Exome Sequencing (WES) data - Desafio Técnico Bioinformata
+Desafio de Bioinformática: Pipeline automatizado de controle de qualidade para dados de Sequenciamento de Exoma Completo (WES) – Desafio Técnico de Bioinformática
 
-## Author
+## Autor
 👨🏽‍💻 Alexandre Junio Borges Araujo  
 📧 alexandrejunio@usp.br  
-▶️ [Linkedin/Alexandre_Borges](https://www.linkedin.com/in/alexandre-borges-57bb14150/)
+▶️ [LinkedIn/Alexandre_Borges](https://www.linkedin.com/in/alexandre-borges-57bb14150/)
 
-# WES Quality Control Pipeline
+# Pipeline de Controle de Qualidade WES
 
 Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequencing (WES), com foco no cálculo de cobertura, inferência de sexo genético e estimativa de contaminação. Este projeto faz parte de um desafio técnico com base na amostra NA06994 do 1000 Genomes Project.
 
@@ -19,27 +19,23 @@ Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequenc
 - **Referência**: GRCh38_full_analysis_set_plus_decoy_hla.fa
 ---
 
-## Criação do diretório e dos ambientes necessários  
+## Etapa 0 (Preparação) - Criação do diretório e configuração dos ambientes necessários  
 Para configurar o ambiente de execução do projeto, use o script [setup_project.sh](setup_project.sh)
 
-**Esse _script_ irá criar os ambientes necessário 🖥️:**
-* [environment.yaml](environment.yaml) — Ambiente principal  
-* [environment_verifybamid.yaml](environment_verifybamid.yaml) — Ambiente para uso do verifyBamID
+**Esse script irá criar os ambientes necessário 🖥️:**
+* _wes_qc_env_ — r-base=4.2.2, r-ggplot2, r-dplyr, r-stringr, r-readr e r-data.table.
+* _verifybamid_env_ — verifybamid.
 
 **e a estrutura mínima do diretório 📁:**    
 
 wes_challenge_incor/  
-├── data/                        
-├── environment.yaml             
-├── environment_verifybamid.yaml  
-├── setup_project.sh  
+├── data/                            
 ├── logs/                        
 ├── results/                                         
 └── scripts/      
 
+**Descrição:**  
 **data/**: Contém os dados de entrada utilizados no pipeline, incluindo arquivos .cram, .bam, .vcf, .bed e o genoma de referência em formato .fa.  
-**environment.yaml**: Arquivo para criação do ambiente Conda principal, com as dependências gerais do pipeline (R, mosdepth, samtools etc.).  
-**environment_verifybamid.yaml**: Ambiente específico contendo apenas os pacotes necessários para execução do verifyBamID2.  
 **logs/**: Diretório onde são armazenados os arquivos de log gerados por cada etapa, facilitando a verificação e depuração do pipeline.  
 **results/**: Diretório com as saídas das análises, incluindo tabelas, gráficos, logs de inferência de sexo, e resultados do verifyBamID2.  
 **scripts/**: Scripts automatizados em Bash e R responsáveis por cada etapa da análise (download, cobertura, conversão, visualização etc.).  
