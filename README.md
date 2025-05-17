@@ -5,7 +5,7 @@ Bioinformatic challenge : Automated quality control pipeline for Whole Exome Seq
 ## Author
 👨🏽‍💻 Alexandre Junio Borges Araujo  
 📧 alexandrejunio@usp.br  
-▶️ LinkedIn: https://www.linkedin.com/in/alexandre-borges-57bb14150/
+▶️ [Linkedin/Alexandre_Borges](https://www.linkedin.com/in/alexandre-borges-57bb14150/)
 
 # WES Quality Control Pipeline
 
