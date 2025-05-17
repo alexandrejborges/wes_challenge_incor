@@ -48,7 +48,7 @@ Para a execução deste pipeline, foram necessários três arquivos públicos ob
 wes_qc_env
 
 **Script:**  
-[scripts/download_dados.sh](scripts/download_dados.sh)
+[download_dados.sh](scripts/download_dados.sh)
 
 **Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
 **Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
@@ -71,11 +71,11 @@ hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK
 Download, indexing and verification completed successfully!
 
 ---
-## Etapa 1 — Análise de Cobertura do Exoma
-Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software Mosdepth e a análise exploratória dos resultados em R.  
+## Etapa 2 — Análise de Cobertura do Exoma com Mosdepth 
+Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software Mosdepth e em seguida (separadamente), a análise exploratória dos resultados em R.  
 
 ### 1.1 — Cálculo de Cobertura com Mosdepth
-O cálculo da cobertura das regiões exônicas foi realizado com o software Mosdepth, utilizando como entrada o arquivo _.cram_ da amostra, o arquivo _.bed_ com as regiões-alvo do exoma e o genoma de referência completo (incluindo decoy e regiões HLA).
+O cálculo da cobertura das regiões exônicas foi realizado utilizando como entrada o arquivo _.cram_ da amostra, o arquivo _.bed_ com as regiões-alvo do exoma e o genoma de referência completo (incluindo decoy e regiões HLA).
 
 A execução foi feita via script _coverage_mosdepth.sh_, que inclui a instrução set -e para interromper automaticamente o pipeline em caso de erro, garantindo a integridade da análise.
 
@@ -83,7 +83,7 @@ A execução foi feita via script _coverage_mosdepth.sh_, que inclui a instruç�
 wes_qc_env
 
 **Script:**  
-scripts/coverage_mosdepth.sh
+[coverage_mosdepth.sh](coverage_mosdepth.sh)
 
 **Requisitos:**  
 Mosdepth  
@@ -109,14 +109,18 @@ wes_challenge_incor/
 ├── logs/   
 
 **Execução:**  
-scripts/coverage_mosdepth.sh
+./scripts/coverage_mosdepth.sh
 
 **Saídas esperadas:**  
 results/NA06994.regions.bed.gz: Profundidade por região exônica  
 results/NA06994.mosdepth.summary.txt: Estatísticas resumidas de cobertura  
-logs/cobertura_mosdepth.log: Log de execução  
+results/NA06994.mosdepth.global.dist.txt  
+results/NA06994.mosdepth.region.dist.txt  
+results/NA06994.per-base.bed.gz  
+results/NA06994.per-base.bed.gz.csi  
+results/NA06994.regions.bed.gz.csi  
 
-**Resultaddos gerados na amostra NA06994:**    
+**Resultaddos gerados na amostra NA06994 [log.file](logs/cobertura_mosdepth.log):**    
 [Mon May 12 21:17:52 -03 2025] Iniciando cálculo de cobertura com mosdepth...  
 Usando 4 threads e referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
 [Mon May 12 21:20:04 -03 2025] Cálculo de cobertura concluído com sucesso.  
