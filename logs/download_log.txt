@@ -1,37 +1,37 @@
-🔽 Baixando o genoma de referência (GRCh38 + decoy + HLA)...
---2025-05-17 14:32:14--  https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
+ Baixando o genoma de referência (GRCh38 + decoy + HLA)...
+--2025-05-17 14:46:59--  https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
 Resolving ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)... 193.62.193.167
 Connecting to ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)|193.62.193.167|:443... connected.
 HTTP request sent, awaiting response... 416 Requested Range Not Satisfiable
 
     The file is already fully retrieved; nothing to do.
 
-📌 Indexando o arquivo fasta...
-🔽 Baixando arquivos de alinhamento (CRAM e CRAI)...
---2025-05-17 14:32:23--  http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
+Indexando o arquivo fasta...
+ Baixando arquivos de alinhamento (CRAM e CRAI)...
+--2025-05-17 14:47:08--  http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
 Resolving ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)... 193.62.193.167
 Connecting to ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)|193.62.193.167|:80... connected.
 HTTP request sent, awaiting response... 416 Requested Range Not Satisfiable
 
     The file is already fully retrieved; nothing to do.
 
---2025-05-17 14:32:23--  http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai
+--2025-05-17 14:47:08--  http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai
 Resolving ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)... 193.62.193.167
 Connecting to ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)|193.62.193.167|:80... connected.
 HTTP request sent, awaiting response... 416 Requested Range Not Satisfiable
 
     The file is already fully retrieved; nothing to do.
 
-🔽 Baixando arquivo BED (Twist Exome v2.0.2)...
---2025-05-17 14:32:24--  https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
-Resolving www.twistbioscience.com (www.twistbioscience.com)... 104.18.247.53, 104.18.248.53, 2606:4700::6812:f735, ...
+Baixando arquivo BED (Twist Exome v2.0.2)...
+--2025-05-17 14:47:09--  https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
+Resolving www.twistbioscience.com (www.twistbioscience.com)... 104.18.247.53, 104.18.248.53, 2606:4700::6812:f835, ...
 Connecting to www.twistbioscience.com (www.twistbioscience.com)|104.18.247.53|:443... connected.
 HTTP request sent, awaiting response... 416 Requested Range Not Satisfiable
 
     The file is already fully retrieved; nothing to do.
 
-🔍 Verificando integridade dos arquivos com MD5...
+Verificando integridade dos arquivos com MD5...
 NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK
 NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK
 hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK
-✅ Download, indexação e verificação concluídos com sucesso!
+ Download, indexação e verificação concluídos com sucesso!

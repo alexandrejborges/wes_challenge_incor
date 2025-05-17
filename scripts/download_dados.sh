@@ -33,7 +33,7 @@ echo " Baixando o genoma de referência (GRCh38 + decoy + HLA)..."
 wget -c --progress=bar:force \
   https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
 
-echo "📌 Indexando o arquivo fasta..."
+echo "Indexando o arquivo fasta..."
 samtools faidx GRCh38_full_analysis_set_plus_decoy_hla.fa
 
 # 2. Download da amostra CRAM e CRAI
@@ -50,7 +50,7 @@ wget -c --progress=bar:force \
   https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
 
 # 4. Verificação de integridade dos arquivos
-echo "🔍 Verificando integridade dos arquivos com MD5..."
+echo "Verificando integridade dos arquivos com MD5..."
 
 # Hashes esperados
 CRAM_HASH="3d8d8dc27d85ceaf0daefa493b8bd660"
