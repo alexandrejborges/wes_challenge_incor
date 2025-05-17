@@ -23,7 +23,7 @@ Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequenc
 Para configurar o ambiente de execução do projeto, use o script [setup_project.sh](setup_project.sh)
 
 **Esse script irá criar os ambientes necessário 🖥️:**
-* _wes_qc_env_ — r-base=4.2.2, r-ggplot2, r-dplyr, r-stringr, r-readr e r-data.table.
+* _wes_qc_env_ — r-base=4.2.2, r-ggplot2, r-dplyr, r-stringr, r-readr, r-data.table e mosdepth.
 * _verifybamid_env_ — verifybamid.
 
 **e a estrutura mínima do diretório 📁:**    
