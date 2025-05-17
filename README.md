@@ -41,19 +41,21 @@ wes_challenge_incor/
 **scripts/**: Scripts automatizados em Bash e R responsáveis por cada etapa da análise (download, cobertura, conversão, visualização etc.).  
 
 ---
-## Etapa 0 — Download dos arquivos necessários:
+## Etapa 1 — Download dos arquivos necessários:
 Para a execução deste pipeline, foram necessários três arquivos públicos obtidos a partir de repositórios oficiais. Os arquivos foram baixados e armazenados na pasta data/.
 
 **Ambiente:**  
 wes_qc_env
 
 **Script:**  
-scripts/download_dados.sh
+[scripts/download_dados.sh](scripts/download_dados.sh)
 
 **Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
 **Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
-**Arquivo de regiões exônicas (.bed):**[hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
-**Genoma de referência (.fa):**[GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)
+**Arquivo de regiões exônicas (.bed):** [hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
+**Genoma de referência (.fa):** [GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)  
+**Arquivo Variant Call Format (VCF):** [hapmap_3.3.hg38.vcf.gz](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz)  
+**Índice do VFC:** [hapmap_3.3.hg38.vcf.gz.tbi](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz.tbi)
 
 A integridade dos arquivos baixados foi realizada por meio da comparação de seus hashes MD5 com as respectivas impressões digitais:
 
@@ -62,11 +64,11 @@ A integridade dos arquivos baixados foi realizada por meio da comparação de se
 **Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
 
 **Resultaddos gerados na amostra NA06994 [log.file](logs/download_log.txt):**  
-Verificando integridade dos arquivos com MD5...
-NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK
-NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK
-hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK
-Download, indexação e verificação concluídos com sucesso!
+Verificando integridade dos arquivos com MD5...  
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK  
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK  
+hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK  
+Download, indexing and verification completed successfully!
 
 ---
 ## Etapa 1 — Análise de Cobertura do Exoma
