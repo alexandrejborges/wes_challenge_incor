@@ -13,14 +13,15 @@ set -e
 PROJECT_DIR="wes_challenge_incor"
 
 echo "Creating project directory structure..."
-mkdir -p ${PROJECT_DIR}/{data,logs,results,scripts}
+mkdir -p ${PROJECT_DIR}/{data,logs,results,scripts,NON-automatizated}
 echo "Directory structure created under ${PROJECT_DIR}/"
 tree -L 2 ${PROJECT_DIR}/
 
 # Create Conda environment: wes_qc_env
 echo "Creating Conda environment: wes_qc_env..."
 conda create -y -n wes_qc_env -c conda-forge -c bioconda \
-    samtools=1.17 wget r-base=4.2.2 \
+    samtools=1.17 wget mosdepth \
+    r-base=4.2.2 \
     r-ggplot2 r-dplyr r-stringr r-readr r-data.table
 
 # Create Conda environment: verifybam_env
