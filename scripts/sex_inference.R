@@ -98,7 +98,7 @@ cat("Inferred sex:", inferred_sex, "\n")
 df_plot <- mutate(
   df_filt,
   tipo = case_when(
-    str_detect(chrom, "^chr[0-9]+$") ~ "Autossomos",
+    str_detect(chrom, "^chr[0-9]+$") ~ "Autosome",
     chrom == "chrX" ~ "X",
     chrom == "chrY" ~ "Y"
   ),
@@ -117,24 +117,22 @@ chr_cover_plot <- ggplot(df_plot, aes(x = chrom_clean, y = mean, fill = tipo)) +
   annotate("text",
            x = which(levels(df_plot$chrom_clean) == "X"),
            y = mean_autosomes,
-           label = paste("Média dos autossomos:", round(mean_autosomes, 2)),
+           label = paste("Autosome mean:", round(mean_autosomes, 2)),
            vjust = -0.5, hjust = 1.5, size = 4,
            color = "black", fontface = "bold") +
   theme_bw() +
   labs(
     title = NULL,
-    x = "Cromossomo",
-    y = "Cobertura Média"
+    x = "Chromosome",
+    y = "Mean depth"
   ) +
-  scale_fill_manual(values = c("Autossomos" = "lightgrey", "X" = "steelblue", "Y" = "tomato")) +
+  scale_fill_manual(values = c("Autosome" = "lightgrey", "X" = "steelblue", "Y" = "tomato")) +
   theme(
-    legend.position = "bottom",
+    legend.position = "none",
     axis.text.x = element_text(vjust = 0.5, hjust = 1, size = 12),
     axis.text.y = element_text(size = 12),
     axis.title.x = element_text(size = 12),
     axis.title.y = element_text(size = 12),
-    legend.text = element_text(size = 12),
-    legend.title = element_blank()
   )
 
 ggsave(output_plot_file, chr_cover_plot, width = 10, height = 6)
