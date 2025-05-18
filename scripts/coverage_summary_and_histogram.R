@@ -1,46 +1,41 @@
 #!/usr/bin/env Rscript
 
 # =============================================================
-# Script Name: histogram_coverage.R
+# Script Name: coverage_summary_and_histogram.R
 # Author: Alexandre J. Borges
-# Last Modified: 2025-05-14
 # Description:
-#   This script reads a BED file with coverage information,
-#   filters non-zero coverage regions, computes the mean depth,
-#   and generates a histogram saved as a PNG image.
-#   Output files:
+#   Performs exploratory analysis and histogram generation from
+#   a BED file with coverage data.
+#   Outputs:
+#     - ../results/exploratory_analysis_coverage.csv
 #     - ../results/histogram_coverage.png
-#     - ../logs/exploratory_coverage_histogram.log
 # =============================================================
 
 # Handle arguments
 args <- commandArgs(trailingOnly = TRUE)
 
 if (length(args) != 1) {
-  stop("Usage: Rscript exploratory_coverage_histogram.R <input_bed_file>")
+  stop("Usage: Rscript coverage_summary_and_histogram.R <input_bed_file>")
 }
 
 input_file <- args[1]
-output_png <- "../results/histogram_coverage.png"
-log_file   <- "../logs/histogram_coverage.log"
+output_csv <- "results/exploratory_analysis_coverage.csv"
+output_png <- "results/histogram_coverage.png"
 
-# Start logging
-sink(log_file, split = TRUE)
-
-# Load or install required packages
+# Load or install required packages silently
 required_packages <- c("ggplot2", "readr", "dplyr")
 
 for (pkg in required_packages) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     install.packages(pkg, repos = "http://cran.us.r-project.org")
   }
-  library(pkg, character.only = TRUE)
+  suppressPackageStartupMessages(library(pkg, character.only = TRUE))
 }
 
 cat("[INFO] Reading file:", input_file, "\n")
 
-# Load dataset
-data <- read_tsv(
+# Read input BED file
+dataset <- read_tsv(
   input_file,
   col_names = c("chr", "start", "end", "sample", "depth"),
   col_types = cols(
@@ -52,14 +47,35 @@ data <- read_tsv(
   )
 )
 
-# Filter out zero-depth regions
-filtered_data <- data %>%
+# --------- Part 1: Summary statistics ---------
+cat("[INFO] Calculating coverage statistics...\n")
+
+mean_depth    <- mean(dataset$depth, na.rm = TRUE)
+min_depth     <- min(dataset$depth, na.rm = TRUE)
+max_depth     <- max(dataset$depth, na.rm = TRUE)
+coverage_10x  <- sum(dataset$depth >= 10) / nrow(dataset) * 100
+coverage_30x  <- sum(dataset$depth >= 30) / nrow(dataset) * 100
+
+summary_df <- data.frame(
+  metric = c("Mean Depth", "Minimum Depth", "Maximum Depth",
+             "Regions with Coverage ≥ 10x (%)",
+             "Regions with Coverage ≥ 30x (%)"),
+  value = c(mean_depth, min_depth, max_depth, coverage_10x, coverage_30x)
+)
+
+write.csv(summary_df, output_csv, row.names = FALSE)
+cat("[INFO] Summary written to:", output_csv, "\n")
+
+cat("========== Coverage Summary ==========\n")
+print(summary_df)
+cat("======================================\n")
+
+# --------- Part 2: Histogram ---------
+cat("[INFO] Generating histogram plot...\n")
+
+filtered_data <- dataset %>%
   filter(depth > 0)
 
-# Compute mean depth
-mean_depth <- mean(data$depth, na.rm = TRUE)
-
-# Create histogram
 hist_plot <- ggplot(filtered_data, aes(x = depth)) +
   geom_histogram(binwidth = 10, fill = "steelblue", color = "black") +
   geom_vline(xintercept = mean_depth, color = "black", linetype = "dashed", size = 1) +
@@ -89,15 +105,11 @@ hist_plot <- ggplot(filtered_data, aes(x = depth)) +
     axis.text.y = element_text(size = 12, face = "bold")
   )
 
-# Save PNG
 ggsave(
   filename = output_png,
   plot = hist_plot,
   width = 10,
   height = 6
 )
-cat("[INFO] Histogram saved to:", output_png, "\n")
-cat("[INFO] Log saved to:", log_file, "\n")
 
-# Stop logging
-sink()
+cat("[INFO] Histogram saved to:", output_png, "\n")
