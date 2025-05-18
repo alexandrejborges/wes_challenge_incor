@@ -2,12 +2,11 @@
 set -euo pipefail
 
 # =============================================================
-# Script Name: contamination_verifybamid.sh 
+# Script Name: contamination_verifybamid.sh
 # Author: Alexandre J Borges
-# Last Modified: 2025-05-16
 # Project: WES-QC: Whole Exome Sequencing Quality Control Pipeline
 # Description:
-#   This script performs contamination estimation for multiple WES BAM files 
+#   This script performs contamination estimation for multiple WES BAM files
 #   using verifyBamID v1.1.3. It filters a HapMap VCF for common biallelic SNPs,
 #   indexes BAMs if needed, executes verifyBamID per sample, and saves outputs.
 # =============================================================

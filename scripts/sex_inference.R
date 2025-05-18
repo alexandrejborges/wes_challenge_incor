@@ -127,3 +127,4 @@ chr_cover_plot <- ggplot(df_plot, aes(x = chrom_clean, y = mean, fill = tipo)) +
 
 ggsave(output_plot, chr_cover_plot, width = 10, height = 6)
 cat("Plot saved to:", output_plot, "\n")
+

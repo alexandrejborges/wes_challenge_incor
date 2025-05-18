@@ -19,3 +19,4 @@ echo "[$(date)] Starting coverage calculation with mosdepth..."
 echo "Using 4 threads and reference: $REF"
 mosdepth -t 4 --fasta "$REF" --by "$BED" "$OUT_PREFIX" "$CRAM"
 echo "[$(date)] Coverage calculation completed successfully."
+
