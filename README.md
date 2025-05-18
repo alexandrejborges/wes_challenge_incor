@@ -275,9 +275,13 @@ wes_challenge_incor/
 * data/<sample>.bam
 * data/<sample>.bam.bai
 
-**Arquivos gerados na amostra NA06994:**
-* NA06994.bam   
-* NA06994.bam.bai
+**Resultaddos gerados na amostra NA06994:**  
+Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...  
+[Sat May 17 21:33:45 -03 2025] Starting CRAM to BAM conversion: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
+[Sat May 17 21:34:52 -03 2025] Indexing BAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam  
+[Sat May 17 21:35:29 -03 2025] Conversion and indexing completed successfully.  
+BAM generated: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam  
+All CRAM files have been converted.  
 
 ### 3.2 — Verificação de Contaminação com verifyBamID
 Utiliza verifyBamID para estimar contaminação com base em variantes de um VCF de referência populacional. Utiliza também um arquivo .bed das regiões exônicas.
