@@ -10,11 +10,11 @@ set -euo pipefail
 #     - CRAM and CRAI files for sample NA06994 (1000 Genomes)
 #     - BED file with exome target regions (Twist Exome v2.0.2)
 #     - VCF and index file from HapMap 3.3 (hg38 version)
-##   Also performs:
+#   Also performs:
 #     - FASTA indexing using samtools
 #     - File integrity check using md5sum
 #
-   Input:
+#   Input:
 #     - None (files are downloaded automatically)
 #
 #   Output:
