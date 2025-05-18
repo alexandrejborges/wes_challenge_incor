@@ -1,79 +1,57 @@
 #!/usr/bin/env Rscript
 
-
 # =============================================================
 # Script Name: sex_inference.R
 # Author: Alexandre J. Borges
-# Last Modified: 2025-05-17
 # Description:
-#   This script performs genetic sex inference based on coverage 
-#   statistics of chrX and chrY from a mosdepth summary file.
-#   It calculates relative coverage values compared to autosomes,
-#   classifies the sample into a probable sex category,
-#   and generates a bar plot of average coverage per chromosome.
-#
+#   Performs genetic sex inference based on chrX and chrY coverage
+#   from a mosdepth summary file.
 #   Input:
 #     - results/<sample>.mosdepth.summary.txt
-#
 #   Output:
 #     - results/<sample>_chrXY_coverage.png
-#     - results/<sample>_chrXY_coverage.log
 # =============================================================
 
-# Load the necessary library explicitly
-library(ggplot2)
-library(readr)
-suppressPackageStartupMessages(library(dplyr))
-library(stringr)
+# Load required libraries
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(readr)
+  library(dplyr)
+  library(stringr)
+})
 
-
-# Get the sample name from the command line argument
+# Get sample name
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 1) {
-  stop("Usage: R ./sex_inference_base.R <sample_name>")
+  stop("Usage: Rscript sex_inference.R <sample_name>")
 }
 sample_name <- args[1]
 
-# Output directory for results
-output_dir <- "results"
-if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
-}
+# Paths
+input_file <- file.path("results", paste0(sample_name, ".mosdepth.summary.txt"))
+output_plot <- file.path("results", paste0(sample_name, "_chrXY_coverage.png"))
 
-log_file <- file.path(output_dir, paste0(sample_name, "_chrXY_coverage.log"))
-output_plot_file <- file.path(output_dir, paste0(sample_name, "_chrXY_coverage.png"))
+# Read data
+cat("[INFO] Reading coverage file:", input_file, "\n")
+df <- read.table(input_file, header = TRUE, sep = "\t", comment.char = "#", stringsAsFactors = FALSE)
 
-# Start redirecting output to the log file
-log_con <- file(log_file, open = "wt")
-sink(log_con)
-sink(log_con, type = "message")
-
-# Read the coverage file
-coverage_file <- file.path("results", paste0(sample_name, ".mosdepth.summary.txt"))
-df <- read.table(coverage_file, header = TRUE, sep = "\t", comment.char = "#", stringsAsFactors = FALSE)
-
-# Filter main chromosomes
+# Filter chrX, chrY, and autosomes
 df_filt <- df[grep("^chr[0-9XY]+$", df$chrom), ]
-
-# Average coverage of autosomes
 autosomes_df <- df_filt[grep("^chr[0-9]+$", df_filt$chrom), ]
 mean_autosomes <- mean(autosomes_df$mean, na.rm = TRUE)
 
-# Coverage on X and Y chromosomes
 coverage_X <- df_filt[df_filt$chrom == "chrX", "mean"]
 coverage_Y <- df_filt[df_filt$chrom == "chrY", "mean"]
 
-# Normalized ratios
 relative_X <- coverage_X / mean_autosomes
 relative_Y <- coverage_Y / mean_autosomes
 
-# Thresholds for sex inference
+# Inference thresholds
 x_female_lower_threshold <- 0.8
 x_male_upper_threshold <- 0.6
 y_male_lower_threshold <- 0.1
 
-
-# Sex inference
+# Inference logic
 if (relative_X >= x_female_lower_threshold && relative_Y < y_male_lower_threshold) {
   inferred_sex <- "Female (XX)"
 } else if (relative_X <= x_male_upper_threshold && relative_Y >= y_male_lower_threshold) {
@@ -86,7 +64,7 @@ if (relative_X >= x_female_lower_threshold && relative_Y < y_male_lower_threshol
   inferred_sex <- "Indeterminate"
 }
 
-# Display results
+# Report
 cat("=== Genetic Sex Inference ===\n")
 cat("Sample:", sample_name, "\n")
 cat("Average autosome coverage:", round(mean_autosomes, 2), "\n")
@@ -94,7 +72,19 @@ cat("chrX coverage:", round(coverage_X, 2), "(", round(relative_X, 2), "x autoso
 cat("chrY coverage:", round(coverage_Y, 2), "(", round(relative_Y, 2), "x autosomes)\n")
 cat("Inferred sex:", inferred_sex, "\n")
 
-# Plotting with ggplot2
+# Save inference summary to TXT
+output_txt <- file.path("results", paste0(sample_name, "_sex_inference.txt"))
+writeLines(c(
+  "=== Genetic Sex Inference ===",
+  paste("Sample:", sample_name),
+  paste("Average autosome coverage:", round(mean_autosomes, 2)),
+  paste("chrX coverage:", round(coverage_X, 2), "(", round(relative_X, 2), "x autosomes)"),
+  paste("chrY coverage:", round(coverage_Y, 2), "(", round(relative_Y, 2), "x autosomes)"),
+  paste("Inferred sex:", inferred_sex)
+), con = output_txt)
+
+
+# Plotting
 df_plot <- mutate(
   df_filt,
   tipo = case_when(
@@ -102,7 +92,7 @@ df_plot <- mutate(
     chrom == "chrX" ~ "X",
     chrom == "chrY" ~ "Y"
   ),
-  chrom_clean = factor(str_remove(chrom, "^chr"), levels = c(as.character(1:22), "X", "Y")) # Ensure correct order
+  chrom_clean = factor(str_remove(chrom, "^chr"), levels = c(as.character(1:22), "X", "Y"))
 )
 
 chr_cover_plot <- ggplot(df_plot, aes(x = chrom_clean, y = mean, fill = tipo)) +
@@ -113,7 +103,7 @@ chr_cover_plot <- ggplot(df_plot, aes(x = chrom_clean, y = mean, fill = tipo)) +
     vjust = -0.3,
     size = 4
   ) +
-  geom_hline(yintercept = mean_autosomes, linetype = "dashed", color = "black") +
+  geom_hline(yintercept = mean_autosomes, linetype = "dashed", color = "black", linewidth = 1) +
   annotate("text",
            x = which(levels(df_plot$chrom_clean) == "X"),
            y = mean_autosomes,
@@ -132,14 +122,8 @@ chr_cover_plot <- ggplot(df_plot, aes(x = chrom_clean, y = mean, fill = tipo)) +
     axis.text.x = element_text(vjust = 0.5, hjust = 1, size = 12),
     axis.text.y = element_text(size = 12),
     axis.title.x = element_text(size = 12),
-    axis.title.y = element_text(size = 12),
+    axis.title.y = element_text(size = 12)
   )
 
-ggsave(output_plot_file, chr_cover_plot, width = 10, height = 6)
-
-cat("Plot saved to:", output_plot_file, "\n")
-
-# Save the log
-sink()
-sink(type = "message")
-close(log_con)
+ggsave(output_plot, chr_cover_plot, width = 10, height = 6)
+cat("Plot saved to:", output_plot, "\n")
