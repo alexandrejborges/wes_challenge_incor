@@ -83,7 +83,7 @@ A execução foi feita via script _coverage_mosdepth.sh_, que inclui a instruç�
 wes_qc_env
 
 **Script:**  
-[coverage_mosdepth.sh](coverage_mosdepth.sh)
+[coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)
 
 **Requisitos:**  
 Mosdepth  
@@ -132,7 +132,7 @@ A análise exploratória foi realizada com funções nativas da linguagem R, uti
 wes_qc_env
 
 **Script:**  
-scripts/exploratory_analysis_coverage.R
+[coverage_summary_and_histogram.R](scripts/coverage_summary_and_histogram.R)
 
 **Requisitos:**  
 R ≥ 4.0  
@@ -176,15 +176,14 @@ A amostra apresentou uma profundidade média de 64,17×, indicando cobertura rob
 
 ---
 ## Etapa 2 — Inferência do Sexo Genético
-A inferência de sexo genético foi realizada com base na cobertura dos cromossomos sexuais, utilizando os arquivos de saída do _mosdepth_ (_.mosdepth.summary.txt_). Diferentemente de abordagens baseadas exclusivamente no exoma, este método considera a cobertura de todos os cromossomos (X e Y) em comparação à cobertura média dos autossomos. A classificação é realizada por meio de limiares empíricos fixos aplicados à razão entre cobertura dos cromossomos sexuais e autossomos, sem uso de inferência bayesiana, como ocorre em ferramentas como o _seGMM_ (Liu et al. 2022).
+A inferência de sexo genético foi realizada com base na cobertura dos cromossomos sexuais, utilizando os arquivos de saída do _mosdepth_ (_.mosdepth.summary.txt_). Diferentemente de abordagens baseadas exclusivamente no exoma, este método considera a cobertura de todos os cromossomos (X e Y) em comparação à cobertura média dos autossomos. A classificação é realizada por meio de limiares empíricos fixos aplicados à razão entre cobertura dos cromossomos sexuais e autossomos como ocorre em ferramentas como o seGMM (Liu et al. 2022). Entretanto, o seGMM também utiliza inferência bayesiana para melhor acurácia, o que não foi necessário nesse pipeline. 
 
-Todos os scripts estão organizados no diretório scripts/. As saídas são organizadas em logs/ e results/.
 
 **Ambiente:**  
 wes_qc_env
 
 **Script:**  
-scripts/sex_inference.R
+[sex_inference.R](scripts/sex_inference.R)
 
 **Requisitos:**  
 R ≥ 4.0  
@@ -248,7 +247,7 @@ Arquivos .cram de amostras de exoma são convertidos para .bam com uso de refer�
 wes_qc_env
 
 **Script:**  
-scripts/convert_cram_to_bam.sh
+[convert_cram_to_bam.sh](scripts/convert_cram_to_bam.sh)
 
 **Requisitos:**  
 samtools ≥ v1.10  
@@ -275,12 +274,10 @@ wes_challenge_incor/
 **Saídas esperadas:**
 * data/<sample>.bam
 * data/<sample>.bam.bai
-* logs/<sample>_convert.log
 
 **Arquivos gerados na amostra NA06994:**
 * NA06994.bam   
 * NA06994.bam.bai
-* NA06994_convert.log
 
 ### 3.2 — Verificação de Contaminação com verifyBamID
 Utiliza verifyBamID para estimar contaminação com base em variantes de um VCF de referência populacional. Utiliza também um arquivo .bed das regiões exônicas.
