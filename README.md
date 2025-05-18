@@ -35,14 +35,34 @@ wes_challenge_incor/
 └── scripts/      
 
 **Descrição:**  
-**data/**: Contém os dados de entrada utilizados no pipeline, incluindo arquivos .cram, .bam, .vcf, .bed e o genoma de referência em formato .fa.  
-**logs/**: Diretório onde são armazenados os arquivos de log gerados por cada etapa, facilitando a verificação e depuração do pipeline.  
-**results/**: Diretório com as saídas das análises, incluindo tabelas, gráficos, logs de inferência de sexo, e resultados do verifyBamID2.  
-**scripts/**: Scripts automatizados em Bash e R responsáveis por cada etapa da análise (download, cobertura, conversão, visualização etc.).  
+`data/`: Contém os dados de entrada utilizados no pipeline, incluindo arquivos .cram, .bam, .vcf, .bed e o genoma de referência em formato .fa.  
+`logs/`: Diretório onde são armazenados os arquivos de log gerados por cada etapa, facilitando a verificação e depuração do pipeline.  
+`results/`: Diretório com as saídas das análises, incluindo tabelas, gráficos, logs de inferência de sexo, e resultados do verifyBamID2.  
+`scripts/`: Scripts automatizados em Bash e R responsáveis por cada etapa da análise (download, cobertura, conversão, visualização etc.).  
 
 ---
+## 🔁 O Pipeline a seguir foi automatizado
+
+O script `run_pipeline.sh` executa automaticamente todas as etapas do pipeline de controle de qualidade para dados de WES. Ele deve ser executado a partir do diretório raiz do projeto (`wes_challenge_incor/`) com ambiente `wes_qc_env`.
+
+### 🔧 O que ele faz:
+
+1. Calcula a cobertura com o mosdepth para cada `.cram` em `data/`  
+2. Executa a análise exploratória de cobertura e gera histogramas com R  
+3. Realiza a inferência de sexo genético com base na razão de cobertura dos cromossomos X e Y  
+4. Converte arquivos `.cram` para `.bam` e gera os arquivos `.bai`  
+5. Estima a contaminação usando `verifyBamID`  
+
+As etapas individuais realizadas podem ser verificadas abaixo.
+
+### ▶️ Como executar:
+
+```bash
+bash run_pipeline.sh
+```
+---
 ## Etapa 1 — Download dos arquivos necessários:
-Para a execução deste pipeline, foram necessários três arquivos públicos obtidos a partir de repositórios oficiais. Os arquivos foram baixados e armazenados na pasta data/.
+Para a execução deste pipeline, foram necessários três arquivos públicos obtidos a partir de repositórios oficiais. Os arquivos foram baixados e armazenados na pasta `data/`.
 
 **Ambiente:**  
 wes_qc_env
@@ -50,18 +70,18 @@ wes_qc_env
 **Script:**  
 [download_dados.sh](scripts/download_dados.sh)
 
-**Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
-**Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
-**Arquivo de regiões exônicas (.bed):** [hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
-**Genoma de referência (.fa):** [GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)  
-**Arquivo Variant Call Format (VCF):** [hapmap_3.3.hg38.vcf.gz](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz)  
+**Arquivo de alinhamento (`.cram`):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
+**Índice do alinhamento (`.cram.crai`):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
+**Arquivo de regiões exônicas (`.bed`):** [hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
+**Genoma de referência (`.fa`):** [GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)  
+**Arquivo Variant Call Format (`.vcf`):** [hapmap_3.3.hg38.vcf.gz](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz)  
 **Índice do VFC:** [hapmap_3.3.hg38.vcf.gz.tbi](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz.tbi)
 
 A integridade dos arquivos baixados foi realizada por meio da comparação de seus hashes MD5 com as respectivas impressões digitais:
 
-**Arquivo .cram:** 3d8d8dc27d85ceaf0daefa493b8bd660  
-**Arquivo .cram.crai:** 15a6576f46f51c37299fc004ed47fcd9  
-**Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
+**Arquivo `.cram`:** 3d8d8dc27d85ceaf0daefa493b8bd660  
+**Arquivo `.cram.crai`:** 15a6576f46f51c37299fc004ed47fcd9  
+**Arquivo `.bed`:** c3a7cea67f992e0412db4b596730d276
 
 **Resultaddos gerados na amostra NA06994 [log.file](logs/download_log.txt):**  
 Verificando integridade dos arquivos com MD5...  
@@ -87,10 +107,10 @@ wes_qc_env
 
 **Requisitos:**  
 Mosdepth  
-Arquivo CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
+Arquivo `CRAM`: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
 Índice CRAI correspondente  
-Referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
-Regiões-alvo: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
+Referência: `data/GRCh38_full_analysis_set_plus_decoy_hla.fa`  
+Regiões-alvo: `data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed`
 
 **Estrutura Esperada para Execução:**  
 wes_challenge_incor/  
@@ -109,16 +129,16 @@ wes_challenge_incor/
 ├── logs/   
 
 **Execução:**  
-./scripts/coverage_mosdepth.sh
+`./scripts/coverage_mosdepth.sh`
 
 **Saídas esperadas:**  
-results/NA06994.regions.bed.gz: Profundidade por região exônica  
-results/NA06994.mosdepth.summary.txt: Estatísticas resumidas de cobertura  
-results/NA06994.mosdepth.global.dist.txt  
-results/NA06994.mosdepth.region.dist.txt  
-results/NA06994.per-base.bed.gz  
-results/NA06994.per-base.bed.gz.csi  
-results/NA06994.regions.bed.gz.csi  
+`results/NA06994.regions.bed.gz`: Profundidade por região exônica  
+`results/NA06994.mosdepth.summary.txt`: Estatísticas resumidas de cobertura  
+`results/NA06994.mosdepth.global.dist.txt`  
+`results/NA06994.mosdepth.region.dist.txt `  
+`results/NA06994.per-base.bed.gz`  
+`results/NA06994.per-base.bed.gz.csi`  
+`results/NA06994.regions.bed.gz.csi`  
 
 **Resultaddos gerados na amostra NA06994 [log.file](logs/cobertura_mosdepth.log):**    
 [Mon May 12 21:17:52 -03 2025] Iniciando cálculo de cobertura com mosdepth...  
@@ -150,12 +170,12 @@ wes_challenge_incor/
 ├── logs/         
 
 **Execução:**
-Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz
+`Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz`
 
 **Saídas esperadas:**
-results/exploratory_analysis_coverage.csv  
-results/histogram_coverage.png  
-logs/exploratory_analysis_coverage.log  
+`results/exploratory_analysis_coverage.csv`   
+`results/histogram_coverage.png`  
+`logs/exploratory_analysis_coverage.log`  
 
 **Resultaddos gerados na amostra NA06994:**  
 [INFO] Loading input file: ../results/NA06994.regions.bed.gz  
@@ -212,11 +232,11 @@ wes_challenge_incor/
 ├── logs/  
 
 **Execução:**  
-Rscript scripts/sex_inference.R <sample_name>
+`Rscript scripts/sex_inference.R <sample_name>`
 
 **Saídas esperadas:**  
-* results/NA06994_chrXY_coverage.png: Gráfico de barras com a cobertura média por cromossomo.  
-* results/NA06994_chrXY_coverage.log: Log contendo razão de cobertura, médias e sexo inferido.
+* `results/NA06994_chrXY_coverage.png`: Gráfico de barras com a cobertura média por cromossomo.  
+* `results/NA06994_chrXY_coverage.log`: Log contendo razão de cobertura, médias e sexo inferido.
 
 **Resultaddos gerados na amostra NA06994:**  
 [Cobertura por cromossomo - NA06994](results/NA06994_chrXY_coverage.png)  
@@ -269,11 +289,11 @@ wes_challenge_incor/
 ├── logs/      
 
 **Execução:**   
-./scripts/convert_cram_to_bam.sh
+`./scripts/convert_cram_to_bam.sh`
 
 **Saídas esperadas:**
-* data/_sample_.bam
-* data/_sample_.bam.bai
+* `data/_sample_.bam`
+* `data/_sample_.bam.bai`
 
 **Resultaddos gerados na amostra NA06994:**  
 Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...  
@@ -317,7 +337,7 @@ wes_challenge_incor/
 
   
 **Execução:**  
-./scripts/contamination_verifybamid.sh
+`./scripts/contamination_verifybamid.sh`
 
 **Saídas esperadas:**
 * results/<sample>_verifybam.selfSM
