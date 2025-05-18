@@ -140,7 +140,7 @@ wes_challenge_incor/
 `results/NA06994.per-base.bed.gz.csi`  
 `results/NA06994.regions.bed.gz.csi`  
 
-**Resultaddos gerados na amostra NA06994 [log.file](logs/cobertura_mosdepth.log):**    
+**Resultaddos gerados na amostra NA06994 [log.file](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**    
 [Mon May 12 21:17:52 -03 2025] Iniciando cálculo de cobertura com mosdepth...  
 Usando 4 threads e referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
 [Mon May 12 21:20:04 -03 2025] Cálculo de cobertura concluído com sucesso.  
@@ -177,7 +177,7 @@ wes_challenge_incor/
 `results/histogram_coverage.png`  
 `logs/exploratory_analysis_coverage.log`  
 
-**Resultaddos gerados na amostra NA06994:**  
+**Resultaddos gerados na amostra NA06994[logfile](NA06994_exploratory_analysis.log):**  
 [INFO] Loading input file: ../results/NA06994.regions.bed.gz  
 [INFO] Calculating coverage statistics...  
 [INFO] Summary written to: ../results/exploratory_analysis_coverage.csv  
@@ -189,7 +189,7 @@ Maximum Depth: 3371.81000
 Regions with Coverage ≥ 10x (%):   71.76290  
 Regions with Coverage ≥ 30x (%):   61.21708  
 
-![Cobertura por cromossomo - NA06994](results/histogram_coverage.png)  
+[Cobertura por cromossomo - NA06994](results/histogram_coverage.png)  
 
 **CONCLUSÃO:**  
 A amostra apresentou uma profundidade média de 64,17×, indicando cobertura robusta para análise de variantes em regiões exônicas. Além disso, 71,76% das regiões apresentaram cobertura igual ou superior a 10×, e 61,22% foram cobertas por pelo menos 30×, valores que indicam boa qualidade para chamadas de variantes com alta confiança. Apesar de adequada, a cobertura não é uniforme, o que reforça a importância de avaliar graficamente a distribuição.
@@ -238,7 +238,7 @@ wes_challenge_incor/
 * `results/NA06994_chrXY_coverage.png`: Gráfico de barras com a cobertura média por cromossomo.  
 * `results/NA06994_chrXY_coverage.log`: Log contendo razão de cobertura, médias e sexo inferido.
 
-**Resultaddos gerados na amostra NA06994:**  
+**Resultaddos gerados na amostra NA06994[logfile](NA06994_chrXY_coverage.log):**  
 [Cobertura por cromossomo - NA06994](results/NA06994_chrXY_coverage.png)  
 === Genetic Sex Inference ===  
 Sample: NA06994  
@@ -294,8 +294,9 @@ wes_challenge_incor/
 **Saídas esperadas:**
 * `data/_sample_.bam`
 * `data/_sample_.bam.bai`
+* `logs/convert_cram_to_bam.log`
 
-**Resultaddos gerados na amostra NA06994:**  
+**Resultaddos gerados na amostra NA06994[logfile](logs/step4_convert_cram_to_bam.log):**  
 Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...  
 [Sat May 17 21:33:45 -03 2025] Starting CRAM to BAM conversion: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
 [Sat May 17 21:34:52 -03 2025] Indexing BAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam  
@@ -342,8 +343,9 @@ wes_challenge_incor/
 **Saídas esperadas:**
 * results/<sample>_verifybam.selfSM
 * results/<sample>_verifybam.depthSM
+* logs/
 
-**Arquivos gerados na amostra NA06994:**  
+**Arquivos gerados na amostra NA06994[logfile](logs/NA06994_verifybam.log):**  
 NA06994_verifybam.depthSM: Este arquivo registra a profundidade de cobertura (DP) da amostra em cada posição do VCF analisado. É útil para diagnósticos e para entender a distribuição da profundidade nas regiões genotipadas.  
 
 NA06994_verifybam.selfSM: Este arquivo contém as estimativas de contaminação genômica e ancestralidade da amostra, com base na comparação entre o BAM analisado e o painel de variantes de referência (VCF). A coluna _FREEMIX_ determina a fração estimada de contaminação.  
