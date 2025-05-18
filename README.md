@@ -175,7 +175,7 @@ Regions with Coverage ≥ 30x (%):   61.21708
 A amostra apresentou uma profundidade média de 64,17×, indicando cobertura robusta para análise de variantes em regiões exônicas. Além disso, 71,76% das regiões apresentaram cobertura igual ou superior a 10×, e 61,22% foram cobertas por pelo menos 30×, valores que indicam boa qualidade para chamadas de variantes com alta confiança. Apesar de adequada, a cobertura não é uniforme, o que reforça a importância de avaliar graficamente a distribuição.
 
 ---
-## Etapa 2 — Inferência do Sexo Genético
+## Etapa 3 — Inferência do Sexo Genético
 A inferência de sexo genético foi realizada com base na cobertura dos cromossomos sexuais, utilizando os arquivos de saída do _mosdepth_ (_.mosdepth.summary.txt_). Diferentemente de abordagens baseadas exclusivamente no exoma, este método considera a cobertura de todos os cromossomos (X e Y) em comparação à cobertura média dos autossomos. A classificação é realizada por meio de limiares empíricos fixos aplicados à razão entre cobertura dos cromossomos sexuais e autossomos como ocorre em ferramentas como o seGMM (Liu et al. 2022). Entretanto, o seGMM também utiliza inferência bayesiana para melhor acurácia, o que não foi necessário nesse pipeline. 
 
 
@@ -231,8 +231,8 @@ Inferred sex: Male (XY)
 A razão entre a cobertura do cromossomo X e os autossomos foi de 0,49, indicando a presença de apenas um cromossomo X. A cobertura observada no cromossomo Y foi de 0,23× em relação aos autossomos, sugerindo a presença do cromossomo Y. Com base nesses valores, a amostra NA06994 foi classificada como tendo sexo genético masculino (XY).
 
 ---
-## Etapa 3 — Verificação de Contaminação
-O análisde de contaminação foi realizada com verifyBamID. Essa escolha se baseou na robustez estatística (inferência Bayesiana otimizada), adequação ao tipo de dado, e uso amplo na comunidade científica. Mais informações poderão se checadas em Jun G. et al. (2012)
+## Etapa 4 — Verificação de Contaminação verifyBamID.
+O verifyBamID foi escolhido para a estimativa de contaminação por ser uma ferramenta amplamente validada para dados de sequenciamento humano, com desempenho eficiente na detecção de DNA exógeno. Seu algoritmo compara os alelos observados nos arquivos BAM com variantes conhecidas presentes em arquivos VCF públicos, como o HapMap 3.3, e estima a fração de contaminação (FREEMIX) com base em modelos estatísticos. Essa abordagem permite identificar níveis baixos de contaminação sem a necessidade de genótipos de controle, sendo especialmente adequada para análises automatizadas e em larga escala. Além disso, o verifyBamID apresenta baixa demanda computacional e compatibilidade com múltiplas amostras, o que o torna uma opção robusta para controle de qualidade inicial em pipelines de WES.
 
 Como o verifyBamID necessita de arquivos .bam. Foram realizados os dois processos consecutivos:  
 * Conversão de arquivos _.cram_ para _.bam_ com indexação  
@@ -240,7 +240,7 @@ Como o verifyBamID necessita de arquivos .bam. Foram realizados os dois processo
 
 Todos os scripts estão organizados no diretório scripts/. As saídas são organizadas em logs/ e results/.
 
-### 3.1 — Conversão de CRAM para BAM
+### 4.1 — Conversão de CRAM para BAM
 Arquivos .cram de amostras de exoma são convertidos para .bam com uso de referência genômica completa. Cada .bam é também indexado (.bai) e os logs são salvos separadamente.
 
 **Ambiente:**  
@@ -283,14 +283,14 @@ Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
 BAM generated: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam  
 All CRAM files have been converted.  
 
-### 3.2 — Verificação de Contaminação com verifyBamID
-Utiliza verifyBamID para estimar contaminação com base em variantes de um VCF de referência populacional. Utiliza também um arquivo .bed das regiões exônicas.
+### 4.2 — Verificação de Contaminação com verifyBamID
+
 
 **Ambiente:**  
 verifybamID_env
 
 **Script:**  
-scripts/contamination_verifybamid.sh
+[contamination_verifybamid.sh](scripts/contamination_verifybamid.sh)
 
 **Requisitos:**
 * verifyBamID ≥ v1.1.3  
@@ -317,12 +317,11 @@ wes_challenge_incor/
 
   
 **Execução:**  
-./scripts/contamination_verifybamid.sh <sample_name>
+./scripts/contamination_verifybamid.sh
 
 **Saídas esperadas:**
 * results/<sample>_verifybam.selfSM
 * results/<sample>_verifybam.depthSM
-* logs/verifybamid_<sample>.log
 
 **Arquivos gerados na amostra NA06994:**  
 NA06994_verifybam.depthSM: Este arquivo registra a profundidade de cobertura (DP) da amostra em cada posição do VCF analisado. É útil para diagnósticos e para entender a distribuição da profundidade nas regiões genotipadas.  
@@ -335,4 +334,3 @@ A amostra NA06994 apresentou uma estimativa de contaminação (_FREEMIX_) de 0,0
 ---
 ## Referências:
 Liu, S., Zeng, Y., Wang, C., Zhang, Q., Chen, M., Wang, X., ... & Bu, F. (2022). seGMM: A new tool for gender determination from massively parallel sequencing data. Frontiers in Genetics, 13, 850804.  
-Jun, G., Flickinger, M., Hetrick, K. N., Romm, J. M., Doheny, K. F., Abecasis, G. R., ... & Kang, H. M. (2012). Detecting and estimating contamination of human DNA samples in sequencing and array-based genotype data. The American Journal of Human Genetics, 91(5), 839-848.
