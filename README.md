@@ -219,7 +219,7 @@ Rscript scripts/sex_inference.R <sample_name>
 * results/NA06994_chrXY_coverage.log: Log contendo razão de cobertura, médias e sexo inferido.
 
 **Resultaddos gerados na amostra NA06994:**  
-![Cobertura por cromossomo - NA06994](results/NA06994_chrXY_coverage.png)  
+[Cobertura por cromossomo - NA06994](results/NA06994_chrXY_coverage.png)  
 === Genetic Sex Inference ===  
 Sample: NA06994  
 Average autosome coverage: 2.92  
