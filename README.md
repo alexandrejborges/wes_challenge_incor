@@ -272,8 +272,8 @@ wes_challenge_incor/
 ./scripts/convert_cram_to_bam.sh
 
 **Saídas esperadas:**
-* data/<sample>.bam
-* data/<sample>.bam.bai
+* data/_sample_.bam
+* data/_sample_.bam.bai
 
 **Resultaddos gerados na amostra NA06994:**  
 Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...  
