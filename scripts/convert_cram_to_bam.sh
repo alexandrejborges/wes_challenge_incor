@@ -1,11 +1,8 @@
-#!/bin/bash
 set -euo pipefail
 
 # ==============================================================================
 # Script: convert_cram_to_bam.sh
 # Author: Alexandre J Borges
-# Last Modified: 2025-05-16
-# Project: WES-QC: Whole Exome Sequencing Quality Control Pipeline
 # Description: Converts all .cram files in the /data directory to .bam and .bai
 # ==============================================================================
 
@@ -51,4 +48,4 @@ for CRAM in "$DATA_DIR"/*.cram; do
   echo "BAM generated: $BAM_OUT"
 done
 
-echo "All CRAM files have been converted.
+echo "All CRAM files have been converted."
