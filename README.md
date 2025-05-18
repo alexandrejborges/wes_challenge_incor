@@ -74,7 +74,7 @@ Download, indexing and verification completed successfully!
 ## Etapa 2 — Análise de Cobertura do Exoma com Mosdepth 
 Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software Mosdepth e em seguida (separadamente), a análise exploratória dos resultados em R.  
 
-### 1.1 — Cálculo de Cobertura com Mosdepth
+### 2.1 — Cálculo de Cobertura com Mosdepth
 O cálculo da cobertura das regiões exônicas foi realizado utilizando como entrada o arquivo _.cram_ da amostra, o arquivo _.bed_ com as regiões-alvo do exoma e o genoma de referência completo (incluindo decoy e regiões HLA).
 
 A execução foi feita via script _coverage_mosdepth.sh_, que inclui a instrução set -e para interromper automaticamente o pipeline em caso de erro, garantindo a integridade da análise.
@@ -125,7 +125,7 @@ results/NA06994.regions.bed.gz.csi
 Usando 4 threads e referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
 [Mon May 12 21:20:04 -03 2025] Cálculo de cobertura concluído com sucesso.  
 
-### 1.2 — Análise Exploratória da Cobertura
+### 2.2 — Análise Exploratória da Cobertura
 A análise exploratória foi realizada com funções nativas da linguagem R, utilizando como entrada o arquivo .bed.gz gerado pelo Mosdepth. O script calcula métricas estatísticas de cobertura e gera uma visualização gráfica da distribuição dos dados.
 
 **Ambiente:**  
