@@ -12,7 +12,7 @@ set -euo pipefail
 # Directories
 DATA_DIR="data"
 LOG_DIR="logs"
-REF="$DATA_DIR/GRCh38_full_analysis_set_plus_decoy_hla.fa"
+REF="${1:-data/GRCh38_full_analysis_set_plus_decoy_hla.fa}"
 
 # Create log directory if it doesn't exist
 mkdir -p "$LOG_DIR"
@@ -51,5 +51,4 @@ for CRAM in "$DATA_DIR"/*.cram; do
   echo "BAM generated: $BAM_OUT"
 done
 
-echo "All CRAM files have been converted."
-
+echo "All CRAM files have been converted.
