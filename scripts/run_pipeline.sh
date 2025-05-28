@@ -26,7 +26,7 @@ echo "========== [2] Exploratory Analysis + Histogram (R) =========="
 for BED_GZ in results/*.regions.bed.gz; do
   SAMPLE=$(basename "$BED_GZ" .regions.bed.gz)
   echo "→ Exploratory coverage analysis for $SAMPLE"
-  Rscript scripts/full_coverage_analysis.R "$BED_GZ" > "logs/${SAMPLE}_exploratory_analysis.log" 2>&1
+  Rscript scripts/coverage_summary_and_histogram.R "$BED_GZ" > "logs/${SAMPLE}_exploratory_analysis.log" 2>&1
 done
 
 echo "========== [3] Genetic Sex Inference (R) =========="
@@ -41,12 +41,27 @@ bash scripts/convert_cram_to_bam.sh | tee logs/step4_convert_cram_to_bam.log
 
 echo "========== [5] Estimating Contamination with verifyBamID =========="
 
+# Handle Conda env switching with fallback
 source ~/miniconda3/etc/profile.d/conda.sh
+
+echo "→ Activating verifybamid_env..."
+set +u
+conda deactivate || true
+set -u
 conda activate verifybamid_env
 
 bash scripts/contamination_verifybamid.sh | tee logs/step5_verifybamid.log
 
+echo "→ Re-activating wes_qc_env..."
+set +u
+conda deactivate || true
+set -u
 conda activate wes_qc_env
 
 echo "========== Pipeline completed successfully =========="
 
+if grep -q "Error" logs/*.log; then
+  echo "[WARNING] Errors were found in the log files. Please review."
+else
+  echo "[OK] All steps completed without errors."
+fi
