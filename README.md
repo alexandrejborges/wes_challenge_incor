@@ -19,7 +19,7 @@ Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequenc
 ---
 
 ## (Preparação) - Criação do diretório e configuração dos ambientes necessários  
-Para configurar o ambiente de execução do projeto, use o script [setup_project.sh](setup_project.sh)
+Para configurar o ambiente de execução do projeto, use o script [setup_project.sh](setup_project.sh).
 
 **Esse script irá criar os ambientes necessário 🖥️:**
 * _wes_qc_env_ — r-base=4.2.2, r-ggplot2, r-dplyr, r-stringr, r-readr, r-data.table e mosdepth.
@@ -47,7 +47,7 @@ Para a execução deste pipeline, foram necessários três arquivos públicos ob
 wes_qc_env
 
 **Script:**  
-[download_dados.sh](scripts/download_dados.sh)
+[download_all.sh.sh](scripts/download_all.sh)
 
 **Arquivo de alinhamento (`.cram`):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
 **Índice do alinhamento (`.cram.crai`):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
