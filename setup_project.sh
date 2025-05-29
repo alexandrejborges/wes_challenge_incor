@@ -9,13 +9,30 @@ set -e
 #   Creates required folders and environments for the pipeline.
 # =============================================================
 
-# Project directory
-PROJECT_DIR="wes_challenge_incor"
-
+# Creating directories
 echo "Creating project directory structure..."
-mkdir -p ${PROJECT_DIR}/{data,logs,results,scripts}
+PROJECT_DIR="wes_challenge_incor"
+mkdir -p "${PROJECT_DIR}"/{data,logs,results,scripts}
 echo "Directory structure created under ${PROJECT_DIR}/"
-tree -L 2 ${PROJECT_DIR}/
+tree -L 2 "${PROJECT_DIR}/"
+
+# Downloading directories
+echo "Downloading scripts to ${PROJECT_DIR}/scripts..."
+SCRIPT_NAMES=(
+    "contamination_verifybamid.sh"
+    "convert_cram_to_bam.sh"
+    "coverage_mosdepth.sh"
+    "coverage_summary_and_histogram.R"
+    "download_all.sh"
+    "run_pipeline.sh"
+    "sex_inference.R"
+)
+for script in "${SCRIPT_NAMES[@]}"; do
+    curl -fsSL "${SCRIPT_REPO_URL}/${script}" -o "${PROJECT_DIR}/scripts/${script}"
+    chmod +x "${PROJECT_DIR}/scripts/${script}"
+    echo " → Downloaded: ${script}"
+done
+echo "All scripts downloaded."
 
 # Create Conda environment: wes_qc_env
 echo "Creating Conda environment: wes_qc_env..."
