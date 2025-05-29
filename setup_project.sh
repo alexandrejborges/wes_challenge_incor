@@ -11,7 +11,12 @@ set -euo pipefail
 #   Download the necessary scripts
 # =============================================================
 
-
+# Creat directories
+PROJECT_DIR="wes_challenge_incor"
+echo "Creating project directory structure..."
+mkdir -p "${PROJECT_DIR}"/{data,logs,results,scripts}
+echo "Directory structure created under ${PROJECT_DIR}/"
+tree -L 2 "${PROJECT_DIR}/"
 
 # Download script files
 SCRIPT_REPO_URL="https://raw.githubusercontent.com/alexandrejborges/wes_challenge_incor/main/scripts"
@@ -31,13 +36,6 @@ for script in "${SCRIPT_NAMES[@]}"; do
     echo " → Downloaded: ${script}"
 done
 echo "All scripts downloaded."
-
-# Creat directories
-PROJECT_DIR="wes_challenge_incor"
-echo "Creating project directory structure..."
-mkdir -p "${PROJECT_DIR}"/{data,logs,results,scripts}
-echo "Directory structure created under ${PROJECT_DIR}/"
-tree -L 2 "${PROJECT_DIR}/"
 
 # Create Conda environment: wes_qc_env
 echo "Creating Conda environment: wes_qc_env..."
