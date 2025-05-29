@@ -72,7 +72,7 @@ Download, indexing and verification completed successfully!
 ---
 ## 🔁 Automação
 
-O script `run_pipeline.sh` executa automaticamente todas as etapas do pipeline de controle de qualidade para dados de WES. Ele deve ser executado a partir do diretório raiz do projeto (`wes_challenge_incor/`) com ambiente `wes_qc_env`.
+O script `run_pipeline.sh` executa automaticamente todas as etapas do pipeline de controle de qualidade para dados de WES. Podendo ser utilizado para mais de uma amostra se necessário. O script deve ser executado a partir do diretório raiz do projeto (`wes_challenge_incor/`) com ambiente `wes_qc_env`.
 
 ### 🔧 O que ele faz:
 
