@@ -11,6 +11,8 @@ Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequenc
 ▶️ [LinkedIn/Alexandre_Borges](https://www.linkedin.com/in/alexandre-borges-57bb14150/)
 
 ## 🔬 Amostra utilizada
+ 
+Este pipeline foi implementado utilizando a amostra descrita abaixo, porém sua estrutura automatizada permite a aplicação a qualquer outra amostra, desde que os arquivos de entrada exigidos estejam devidamente disponibilizados (ver seção: 'Preparação — Download dos arquivos necessários').
 
 - **Nome**: NA06994
 - **Origem**: Projeto 1000 Genomes – CEU
@@ -19,48 +21,54 @@ Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequenc
 ---
 
 ## (Preparação) - Criação do diretório e configuração dos ambientes necessários  
-Para configurar o ambiente de execução do projeto, use o script [setup_project.sh](setup_project.sh).
+Não é necessário clonar este repositório principal para executar o projeto. Basta executar o script [setup_project.sh](setup_project.sh), que irá configurar automaticamente o ambiente, criar a estrutura mínima de diretórios e baixar os scripts necessários para a execução do pipeline.
 
-**Esse script irá criar os ambientes necessário 🖥️:**
+**Configuração dos ambientes necessários 🖥️:**  
 * _wes_qc_env_ — r-base=4.2.2, r-ggplot2, r-dplyr, r-stringr, r-readr, r-data.table e mosdepth.
 * _verifybamid_env_ — verifybamid.
 
-**e a estrutura mínima do diretório 📁:**    
-
+**A estrutura mínima do diretório 📁:**    
 wes_challenge_incor/  
 ├── data/                            
 ├── logs/                        
 ├── results/                                         
-└── scripts/      
+└── scripts/     
 
-**Descrição:**  
-`data/`: Contém os dados de entrada utilizados no pipeline, incluindo arquivos .cram, .bam, .vcf, .bed e .fa. Devido ao tamanho dos arquivos, ambos não se encontram neste diretório, mas deverão ser baixados na próxima etapa.  
-`logs/`: Diretório onde são armazenados os arquivos de log gerados por cada etapa, facilitando a verificação e depuração do pipeline.  
-`results/`: Diretório com as saídas das análises, incluindo tabelas, gráficos, logs de inferência de sexo, e resultados do verifyBamID2.  
-`scripts/`: Scripts automatizados em Bash e R responsáveis por cada etapa da análise (download, cobertura, conversão, visualização etc.).  
+**Scripts necessários 📄:**  
+└── scripts  
+    ├── contamination_verifybamid.sh  
+    ├── convert_cram_to_bam.sh  
+    ├── coverage_mosdepth.sh  
+    ├── coverage_summary_and_histogram.R  
+    ├── download_all.sh  
+    ├── run_pipeline.sh  
+    └── sex_inference.R  
+
+Informações detalhadas sobre os scripts podem ser encontradas nas próximas seções  
 
 ---
 ## (Preparação) — Download dos arquivos necessários
-Para a execução deste pipeline, foram necessários três arquivos públicos obtidos a partir de repositórios oficiais. Os arquivos foram baixados e armazenados na pasta `data/`.
+Para a execução do pipeline com a amostra NA06994, foram necessários de seis arquivos públicos obtidos a partir de repositórios oficiais. Ambos foram baixados com script abaixo e armazenados na pasta data/+.
 
 **Ambiente:**  
-wes_qc_env
+ative o ambiente _wes_qc_env_: `conda activate wes_qc_env`  
 
 **Script:**  
-[download_all.sh.sh](scripts/download_all.sh)
+[download_all.sh](scripts/download_all.sh)  
+Execute: `./script/download_all.sh`
 
-**Arquivo de alinhamento (`.cram`):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
-**Índice do alinhamento (`.cram.crai`):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
-**Arquivo de regiões exônicas (`.bed`):** [hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
-**Genoma de referência (`.fa`):** [GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)  
-**Arquivo Variant Call Format (`.vcf`):** [hapmap_3.3.hg38.vcf.gz](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz)  
+**Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
+**Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
+**Arquivo de regiões exônicas (.bed):** [hg38_exome_v2.0.2_targets_validated.re_annotated.bed](https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed)  
+**Genoma de referência (.fa):** [GRCh38_full_analysis_set_plus_decoy_hla.fa](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)  
+**Arquivo Variant Call Format (.vcf):** [hapmap_3.3.hg38.vcf.gz](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz)  
 **Índice do VFC:** [hapmap_3.3.hg38.vcf.gz.tbi](https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz.tbi)
 
 A integridade dos arquivos baixados foi realizada por meio da comparação de seus hashes MD5 com as respectivas impressões digitais:
 
-**Arquivo `.cram`:** 3d8d8dc27d85ceaf0daefa493b8bd660  
-**Arquivo `.cram.crai`:** 15a6576f46f51c37299fc004ed47fcd9  
-**Arquivo `.bed`:** c3a7cea67f992e0412db4b596730d276
+**Arquivo .cram:** 3d8d8dc27d85ceaf0daefa493b8bd660  
+**Arquivo .cram.crai:** 15a6576f46f51c37299fc004ed47fcd9  
+**Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
 
 **Resultados (log) gerados na amostra NA06994 [log.file](logs/download_log.txt):**  
 Verificando integridade dos arquivos com MD5...  
