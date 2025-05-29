@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 # =============================================================
 # Script Name: coverage_mosdepth.sh
@@ -8,15 +8,33 @@ set -e
 #   Computes coverage over exonic target regions using mosdepth.
 # =============================================================
 
-# Input paths
-CRAM="data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram"
-BED="data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed"
-OUT_PREFIX="results/NA06994"
-REF="data/GRCh38_full_analysis_set_plus_decoy_hla.fa"
+# Checks if all 3 arguments were provided
+if [[ $# -ne 3 ]]; then
+  echo "Usage: $0 <CRAM_file> <BED_file> <FASTA_file>"
+  exit 1
+fi
 
-# Run mosdepth
-echo "[$(date)] Starting coverage calculation with mosdepth..."
-echo "Using 4 threads and reference: $REF"
+# Arguments
+CRAM="$1"
+BED="$2"
+REF="$3"
+
+# Checks if all files exists
+[[ ! -f "$CRAM" ]] && { echo "ERROR: CRAM not found: $CRAM"; exit 1; }
+[[ ! -f "$BED" ]] && { echo "ERROR: BED not found: $BED"; exit 1; }
+[[ ! -f "$REF" ]] && { echo "ERROR: FASTA not found: $REF"; exit 1; }
+
+#  Samples name
+SAMPLE=$(basename "$CRAM" .cram)
+OUT_PREFIX="results/${SAMPLE}"
+
+# Executa o mosdepth
+echo "[$(date)] Running Mosdepth for $SAMPLE"
+echo "→ Using BED: $BED"
+echo "→ Using Reference: $REF"
+echo "→ Output Prefix: $OUT_PREFIX"
+
 mosdepth -t 4 --fasta "$REF" --by "$BED" "$OUT_PREFIX" "$CRAM"
-echo "[$(date)] Coverage calculation completed successfully."
+
+echo "[$(date)] Coverage calculation completed for $SAMPLE"
 
