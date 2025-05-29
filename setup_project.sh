@@ -13,7 +13,7 @@ set -e
 PROJECT_DIR="wes_challenge_incor"
 
 echo "Creating project directory structure..."
-mkdir -p ${PROJECT_DIR}/{data,logs,results,scripts,NON-automatizated}
+mkdir -p ${PROJECT_DIR}/{data,logs,results,scripts}
 echo "Directory structure created under ${PROJECT_DIR}/"
 tree -L 2 ${PROJECT_DIR}/
 
