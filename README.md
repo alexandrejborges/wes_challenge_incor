@@ -73,7 +73,7 @@ A integridade dos arquivos baixados foi realizada por meio da comparação de se
 **Arquivo .cram.crai:** 15a6576f46f51c37299fc004ed47fcd9  
 **Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
 
-**Resultados (log) gerados na amostra NA06994 [log.file](logs/download_log.txt):**  
+**Resultados (log) gerados na amostra NA06994 [download_files.log](logs/download_files.log):**  
 Verificando integridade dos arquivos com MD5...  
 NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK  
 NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK  
@@ -136,7 +136,7 @@ wes_challenge_incor/
 [coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)  
 Execução: `./scripts/coverage_mosdepth.sh`
 
-**Log gerado para amostra NA06994 [log.file](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**  
+**Log gerado para amostra NA06994 [mosdepth.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**  
 ```
 → CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
 → BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed  
@@ -174,7 +174,7 @@ wes_challenge_incor/
 [coverage_summary_and_histogram.R](scripts/coverage_summary_and_histogram.R)
 Execução: Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz``
 
-**Log gerado para amostra NA06994 [logfile](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_exploratory_analysis.log):**  
+**Log gerado para amostra NA06994 [exploratory_analysis.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_exploratory_analysis.log):**  
 
 ```
 Warning messages:
@@ -211,17 +211,22 @@ A amostra apresentou uma profundidade média de 64,17×, indicando cobertura rob
 ## Inferência do Sexo Genético
 A inferência de sexo genético foi realizada com base na cobertura dos cromossomos sexuais, utilizando os arquivos de saída do _mosdepth_ (_.mosdepth.summary.txt_). Diferentemente de abordagens baseadas exclusivamente no exoma, este método considera a cobertura de todos os cromossomos (X e Y) em comparação à cobertura média dos autossomos. A classificação é realizada por meio de limiares empíricos fixos aplicados à razão entre cobertura dos cromossomos sexuais e autossomos como ocorre em ferramentas como o seGMM (Liu et al. 2022). Entretanto, o seGMM também utiliza inferência bayesiana para melhor acurácia, o que não foi necessário nesse pipeline. 
 
-
 **Ambiente:**  
 wes_qc_env
 
-**Script:**  
-[sex_inference.R](scripts/sex_inference.R)
+**Estrutura Esperada para Execução:**  
+wes_challenge_incor/  
+├── results/  
+│   └── NA06994.mosdepth.summary.txt   
+│  
+├── scripts/  
+│   └── sex_inference.R    
+│  
+├── logs/  
 
-**Requisitos:**  
-R ≥ 4.0  
-Pacotes: ggplot2, readr, dplyr, stringr  
-Arquivo de entrada: results/<sample>.mosdepth.summary.txt
+**Script:**  
+[sex_inference.R](scripts/sex_inference.R)  
+`Rscript scripts/sex_inference.R <results/<sample>.mosdepth.summary.txt>`
 
 **Lógicas de Classificação Utilizadas:**  
 chrX ≈ 2× autosomos, chrY ≈ 0 =	Female (XX)  
@@ -234,31 +239,26 @@ x_female_lower_threshold <- 0.8
 x_male_upper_threshold <- 0.6  
 y_male_lower_threshold <- 0.1  
 
-**Estrutura Esperada para Execução:**  
-wes_challenge_incor/  
-├── results/  
-│   └── NA06994.mosdepth.summary.txt   
-│  
-├── scripts/  
-│   └── sex_inference.R    
-│  
-├── logs/  
-
-**Execução:**  
-`Rscript scripts/sex_inference.R <sample_name>`
-
-**Saídas esperadas:**  
-* `results/NA06994_chrXY_coverage.png`: Gráfico de barras com a cobertura média por cromossomo.  
-* `results/NA06994_chrXY_coverage.log`: Log contendo razão de cobertura, médias e sexo inferido.
+**Log gerado na amostra NA06994 [chrXY_coverage.log](NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_chrXY_coverage.log):**   
+```
+Warning messages:
+1: package ‘ggplot2’ was built under R version 4.2.3
+2: package ‘readr’ was built under R version 4.2.3
+3: package ‘dplyr’ was built under R version 4.2.3
+4: package ‘stringr’ was built under R version 4.2.3
+[INFO] Reading coverage file: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.summary.txt
+=== Genetic Sex Inference ===
+Sample: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+Average autosome coverage: 2.92
+chrX coverage: 1.44 ( 0.49 x autosomes)
+chrY coverage: 0.66 ( 0.23 x autosomes)
+Inferred sex: Male (XY)
+Plot saved to: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_chrXY_coverage.png
+```
 
 **Resultaddos gerados na amostra NA06994[logfile](NA06994_chrXY_coverage.log):**  
-![Cobertura por cromossomo - NA06994](results/NA06994_chrXY_coverage.png)  
-=== Genetic Sex Inference ===  
-Sample: NA06994  
-Average autosome coverage: 2.92  
-chrX coverage: 1.44 ( 0.49 x autosomes)  
-chrY coverage: 0.66 ( 0.23 x autosomes)  
-Inferred sex: Male (XY)  
+![Cobertura por cromossomo - NA06994](results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_chrXY_coverage.png)  
+ 
 
 **CONCLUSÃO:**  
 A razão entre a cobertura do cromossomo X e os autossomos foi de 0,49, indicando a presença de apenas um cromossomo X. A cobertura observada no cromossomo Y foi de 0,23× em relação aos autossomos, sugerindo a presença do cromossomo Y. Com base nesses valores, a amostra NA06994 foi classificada como tendo sexo genético masculino (XY).
