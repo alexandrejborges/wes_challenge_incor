@@ -2,7 +2,7 @@ Warning messages:
 1: package ‘ggplot2’ was built under R version 4.2.3 
 2: package ‘readr’ was built under R version 4.2.3 
 3: package ‘dplyr’ was built under R version 4.2.3 
-[INFO] Reading file: results/NA06994.regions.bed.gz 
+[INFO] Reading file: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.regions.bed.gz 
 [INFO] Calculating coverage statistics...
 [INFO] Summary written to: results/exploratory_analysis_coverage.csv 
 ========== Coverage Summary ==========

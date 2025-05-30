@@ -1,0 +1,12 @@
+[Fri May 30 14:25:03 -03 2025] Filtering original VCF for common biallelic SNPs...
+[Fri May 30 14:25:18 -03 2025] Filtered VCF saved to data/hapmap_filtered.vcf.gz
+[Fri May 30 14:25:18 -03 2025] Starting sample: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:25:18 -03 2025] Running verifyBamID for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
+verifyBamID 1.1.3 -- verify identity and purity of sequence data
+(c) 2010-2014 Hyun Min Kang, Goo Jun, and Goncalo Abecasis
+
+
+WARNING - 
+--self option was autotomatically turned on by default. Specify --best option if you wanted to check across all possible samples in the VCF
+[Fri May 30 15:20:45 -03 2025] Completed: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.selfSM
+[Fri May 30 15:20:45 -03 2025] All analyses completed.

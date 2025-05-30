@@ -1,3 +1,6 @@
+Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
 [Fri May 30 14:23:17 -03 2025] Starting CRAM to BAM conversion: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
 [Fri May 30 14:24:25 -03 2025] Indexing BAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
 [Fri May 30 14:25:02 -03 2025] Conversion and indexing completed successfully.
+BAM generated: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
+All CRAM files have been converted.
