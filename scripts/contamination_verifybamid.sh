@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 
 # =============================================================
 # Script Name: contamination_verifybamid.sh
@@ -11,6 +10,7 @@ set -euo pipefail
 #   indexes BAMs if needed, executes verifyBamID per sample, and saves outputs.
 # =============================================================
 
+set -euo pipefail
 
 VCF_ORIG="data/hapmap_3.3.hg38.vcf.gz"
 VCF_FILTERED="data/hapmap_filtered.vcf.gz"
@@ -30,7 +30,6 @@ fi
 for BAM in data/*.bam; do
   SAMPLE=$(basename "$BAM" .bam)
   OUT_PREFIX="results/${SAMPLE}_verifybam"
-  LOG_FILE="logs/verifybamid_${SAMPLE}.log"
 
   echo "[$(date)] Starting sample: $SAMPLE"
 
@@ -54,8 +53,7 @@ for BAM in data/*.bam; do
     --out "$OUT_PREFIX" \
     --ignoreRG \
     --precise \
-    --maxDepth 100 \
-    2>&1 | tee "$LOG_FILE"
+    --maxDepth 100 
 
   if [ -f "$SELFSM" ]; then
     echo "[$(date)] Completed: $SELFSM"

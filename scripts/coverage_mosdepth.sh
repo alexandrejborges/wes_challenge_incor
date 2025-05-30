@@ -8,33 +8,34 @@ set -euo pipefail
 #   Computes coverage over exonic target regions using mosdepth.
 # =============================================================
 
-# Checks if all 3 arguments were provided
-if [[ $# -ne 3 ]]; then
-  echo "Usage: $0 <CRAM_file> <BED_file> <FASTA_file>"
-  exit 1
-fi
+# Automatically find the CRAM file (expects only one)
+CRAM=$(find data/ -maxdepth 1 -name "*.cram" | head -n 1)
+[[ -z "$CRAM" ]] && { echo "ERROR: No CRAM file found in data/"; exit 1; }
 
-# Arguments
-CRAM="$1"
-BED="$2"
-REF="$3"
+# Automatically find the BED file
+BED=$(find data/ -maxdepth 1 -name "*.bed" | head -n 1)
+[[ -z "$BED" ]] && { echo "ERROR: No BED file found in data/"; exit 1; }
 
-# Checks if all files exists
-[[ ! -f "$CRAM" ]] && { echo "ERROR: CRAM not found: $CRAM"; exit 1; }
-[[ ! -f "$BED" ]] && { echo "ERROR: BED not found: $BED"; exit 1; }
-[[ ! -f "$REF" ]] && { echo "ERROR: FASTA not found: $REF"; exit 1; }
+# Automatically find the FASTA reference file
+REF=$(find data/ -maxdepth 1 -name "*.fa" | head -n 1)
+[[ -z "$REF" ]] && { echo "ERROR: No FASTA file found in data/"; exit 1; }
 
-#  Samples name
+# Extract sample name from CRAM filename
 SAMPLE=$(basename "$CRAM" .cram)
 OUT_PREFIX="results/${SAMPLE}"
 
-# Executa o mosdepth
-echo "[$(date)] Running Mosdepth for $SAMPLE"
-echo "→ Using BED: $BED"
-echo "→ Using Reference: $REF"
-echo "→ Output Prefix: $OUT_PREFIX"
+# Display file paths
+echo "→ CRAM: $CRAM"
+echo "→ BED: $BED"
+echo "→ Reference: $REF"
+echo "→ Output Prefix: ${OUT_PREFIX}_mosdepth"
 
-mosdepth -t 4 --fasta "$REF" --by "$BED" "$OUT_PREFIX" "$CRAM"
+# Run Mosdepth
+# If THREADS is defined, use it; otherwise run without -t
+if [[ -n "${THREADS:-}" ]]; then
+  mosdepth -t "$THREADS" --fasta "$REF" --by "$BED" "$OUT_PREFIX" "$CRAM"
+else
+  mosdepth --fasta "$REF" --by "$BED" "$OUT_PREFIX" "$CRAM"
+fi
 
 echo "[$(date)] Coverage calculation completed for $SAMPLE"
-

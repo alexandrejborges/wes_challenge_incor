@@ -25,7 +25,7 @@ set -euo pipefail
 mkdir -p data logs
 
 # Redirect all output to log file
-LOG_FILE="logs/download_log.txt"
+LOG_FILE="logs/download_files.log"
 exec > >(tee "$LOG_FILE") 2>&1
 
 echo "[$(date)] Starting download script..."
