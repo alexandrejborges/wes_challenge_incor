@@ -1,5 +1,5 @@
 # WES-QC: Controle de Qualidade para Sequenciamento de Exoma Completo
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)  
+![Status](https://img.shields.io/badge/status-concluído-brightgreen) ![Bash](https://img.shields.io/badge/language-Bash-blue?logo=gnu-bash) ![R](https://img.shields.io/badge/language-R-1f425f?logo=r)
 
 # Pipeline de Controle de Qualidade WES
 
