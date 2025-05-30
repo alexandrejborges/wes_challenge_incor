@@ -1,7 +1,0 @@
-THREADS not defined — using default behavior for each tool.
-========== [1] Running Mosdepth ==========
-[Fri May 30 14:20:06 -03 2025] → Running Mosdepth for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
-→ CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
-→ BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
-→ Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa
-→ Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth
