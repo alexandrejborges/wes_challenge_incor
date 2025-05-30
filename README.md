@@ -105,29 +105,17 @@ wes_challenge_incor
 [run_pipeline.sh](scripts/run_pipeline.sh)  
 Execução: `./scripts/run_pipeline.sh <Número de núcleos de processamento>`
 
-Cada etapa do pipeline é descrita a seguir e pode ser executada isoladamente!
+Cada etapa do pipeline é descrita a seguir e pode ser executada isoladamente a partir do diretório principal wes_challenge_incor!
 
 ---
 ## Análise de Cobertura do Exoma com Mosdepth 
-Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software Mosdepth e em seguida (separadamente), a análise exploratória dos resultados em R.  
+Esta etapa realiza o cálculo da cobertura de regiões exônicas utilizando o software _Mosdepth_ e em seguida (separadamente), a análise exploratória dos resultados em R.  
 
 ### Cálculo de Cobertura com Mosdepth
 O cálculo da cobertura das regiões exônicas foi realizado utilizando como entrada o arquivo _.cram_ da amostra, o arquivo _.bed_ com as regiões-alvo do exoma e o genoma de referência completo (incluindo decoy e regiões HLA).
 
-A execução foi feita via script _coverage_mosdepth.sh_, que inclui a instrução set -e para interromper automaticamente o pipeline em caso de erro, garantindo a integridade da análise.
-
 **Ambiente:**  
 wes_qc_env
-
-**Script:**  
-[coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)
-
-**Requisitos:**  
-Mosdepth  
-Arquivo `CRAM`: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
-Índice CRAI correspondente  
-Referência: `data/GRCh38_full_analysis_set_plus_decoy_hla.fa`  
-Regiões-alvo: `data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed`
 
 **Estrutura Esperada para Execução:**  
 wes_challenge_incor/  
@@ -137,30 +125,30 @@ wes_challenge_incor/
 │   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa               
 │   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa.fai           
 │   └── hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed  
-│  
 ├── scripts/  
 │   └── coverage_mosdepth.sh  
-│  
 ├── results/  
-│  
 ├── logs/   
 
-**Execução:**  
-`./scripts/coverage_mosdepth.sh`
+**Script:**  
+[coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)
+Execução: `./scripts/coverage_mosdepth.sh`
 
-**Saídas esperadas:**  
-`results/NA06994.regions.bed.gz`: Profundidade por região exônica  
-`results/NA06994.mosdepth.summary.txt`: Estatísticas resumidas de cobertura  
-`results/NA06994.mosdepth.global.dist.txt`  
-`results/NA06994.mosdepth.region.dist.txt `  
-`results/NA06994.per-base.bed.gz`  
-`results/NA06994.per-base.bed.gz.csi`  
-`results/NA06994.regions.bed.gz.csi`  
+**Log gerado para amostra NA06994 [log.file](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**
+→ CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
+→ BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
+→ Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa
+→ Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth
+[Fri May 30 11:16:47 -03 2025] Coverage calculation completed for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
 
-**Resultaddos gerados na amostra NA06994 [log.file](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**    
-[Mon May 12 21:17:52 -03 2025] Iniciando cálculo de cobertura com mosdepth...  
-Usando 4 threads e referência: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
-[Mon May 12 21:20:04 -03 2025] Cálculo de cobertura concluído com sucesso.  
+**Resultados gerados na amostra NA06994**
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.global.dist.txt  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.region.dist.txt  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.summary.txt  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.per-base.bed.gz  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.per-base.bed.gz.csi  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.regions.bed.gz  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.regions.bed.gz.csi  
 
 ### Análise Exploratória da Cobertura
 A análise exploratória foi realizada com funções nativas da linguagem R, utilizando como entrada o arquivo .bed.gz gerado pelo Mosdepth. O script calcula métricas estatísticas de cobertura e gera uma visualização gráfica da distribuição dos dados.
