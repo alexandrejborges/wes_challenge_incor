@@ -199,7 +199,7 @@ Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 [INFO] Histogram saved to: results/histogram_coverage.png
 ```
 
-**Resultaddos gerados para a amostra NA06994:**  
+**Resultados gerados para a amostra NA06994:**  
 exploratory_analysis_coverage.csv   
 histogram_coverage.png  
 ![Cobertura por cromossomo - NA06994](results/histogram_coverage.png)  
@@ -256,9 +256,8 @@ Inferred sex: Male (XY)
 Plot saved to: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_chrXY_coverage.png
 ```
 
-**Resultaddos gerados na amostra NA06994[logfile](NA06994_chrXY_coverage.log):**  
+**Resultados gerados na amostra NA06994 [chrXY_coverage.png](results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_chrXY_coverage.png):**  
 ![Cobertura por cromossomo - NA06994](results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_chrXY_coverage.png)  
- 
 
 **CONCLUSÃO:**  
 A razão entre a cobertura do cromossomo X e os autossomos foi de 0,49, indicando a presença de apenas um cromossomo X. A cobertura observada no cromossomo Y foi de 0,23× em relação aos autossomos, sugerindo a presença do cromossomo Y. Com base nesses valores, a amostra NA06994 foi classificada como tendo sexo genético masculino (XY).
