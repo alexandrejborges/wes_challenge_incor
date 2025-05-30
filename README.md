@@ -125,8 +125,10 @@ wes_challenge_incor/
 │   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa               
 │   ├── GRCh38_full_analysis_set_plus_decoy_hla.fa.fai           
 │   └── hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed  
+│  
 ├── scripts/  
 │   └── coverage_mosdepth.sh  
+│  
 ├── results/  
 ├── logs/   
 
@@ -135,13 +137,15 @@ wes_challenge_incor/
 Execução: `./scripts/coverage_mosdepth.sh`
 
 **Log gerado para amostra NA06994 [log.file](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**  
+```
 → CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
 → BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed  
 → Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
 → Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth  
 [Fri May 30 11:16:47 -03 2025] Coverage calculation completed for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome  
+```
 
-**Resultados gerados na amostra NA06994**
+**Resultados gerados para amostra NA06994**  
 results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.global.dist.txt  
 results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.region.dist.txt  
 results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.summary.txt  
@@ -151,18 +155,10 @@ results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.regions.bed.gz
 results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.regions.bed.gz.csi  
 
 ### Análise Exploratória da Cobertura
-A análise exploratória foi realizada com funções nativas da linguagem R, utilizando como entrada o arquivo .bed.gz gerado pelo Mosdepth. O script calcula métricas estatísticas de cobertura e gera uma visualização gráfica da distribuição dos dados.
+A análise exploratória foi realizada com funções nativas da linguagem R, utilizando como entrada o arquivo _.bed.gz_ gerado pelo _Mosdepth_. O script calcula métricas estatísticas de cobertura e gera uma visualização gráfica da distribuição dos dados.
 
 **Ambiente:**  
 wes_qc_env
-
-**Script:**  
-[coverage_summary_and_histogram.R](scripts/coverage_summary_and_histogram.R)
-
-**Requisitos:**  
-R ≥ 4.0  
-Pacotes: readr, dplyr, stringr, ggplot2  
-Arquivo de entrada: results/NA06994.regions.bed.gz
 
 **Estrutura Esperada para Execução:**  
 wes_challenge_incor/  
@@ -170,30 +166,42 @@ wes_challenge_incor/
 │   └── NA06994.regions.bed.gz  
 │  
 ├── scripts/  
-│   └── exploratory_analysis_coverage.R  
+│   └── exploratory_analysis_coverage.R   
 │  
 ├── logs/         
 
-**Execução:**
-`Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz`
+**Script:**  
+[coverage_summary_and_histogram.R](scripts/coverage_summary_and_histogram.R)
+Execução: Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz``
 
-**Saídas esperadas:**
-`results/exploratory_analysis_coverage.csv`   
-`results/histogram_coverage.png`  
-`logs/exploratory_analysis_coverage.log`  
+**Log gerado para amostra NA06994 [logfile](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_exploratory_analysis.log):**  
 
-**Resultaddos gerados na amostra NA06994[logfile](NA06994_exploratory_analysis.log):**  
-[INFO] Loading input file: ../results/NA06994.regions.bed.gz  
-[INFO] Calculating coverage statistics...  
-[INFO] Summary written to: ../results/exploratory_analysis_coverage.csv  
-========== Coverage Summary ==========  
-metric      
-Mean Depth:   64.16930  
-Minimum Depth:    0.00000  
-Maximum Depth: 3371.81000  
-Regions with Coverage ≥ 10x (%):   71.76290  
-Regions with Coverage ≥ 30x (%):   61.21708  
+```
+Warning messages:
+1: package ‘ggplot2’ was built under R version 4.2.3
+2: package ‘readr’ was built under R version 4.2.3
+3: package ‘dplyr’ was built under R version 4.2.3
+[INFO] Reading file: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.regions.bed.gz
+[INFO] Calculating coverage statistics...
+[INFO] Summary written to: results/exploratory_analysis_coverage.csv
+========== Coverage Summary =========
+                           metric      value
+1                      Mean Depth   64.16930
+2                   Minimum Depth    0.00000
+3                   Maximum Depth 3371.81000
+4 Regions with Coverage ≥ 10x (%)   71.76290
+5 Regions with Coverage ≥ 30x (%)   61.21708
+======================================
+[INFO] Generating histogram plot...
+Warning message:
+Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+[INFO] Histogram saved to: results/histogram_coverage.png
+```
 
+**Resultaddos gerados para a amostra NA06994:**  
+exploratory_analysis_coverage.csv   
+histogram_coverage.png  
 ![Cobertura por cromossomo - NA06994](results/histogram_coverage.png)  
 
 **CONCLUSÃO:**  
