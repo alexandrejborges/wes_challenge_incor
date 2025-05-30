@@ -56,9 +56,9 @@ wes_qc_env
 **Diretório de Execução:**  
 wes_challenge_incor
 
-**Script:**  
+**Script ▶️:**  
 [download_all.sh](scripts/download_all.sh)  
-▶️ `./script/download_all.sh`
+`./script/download_all.sh`
 
 **Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
 **Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
@@ -103,7 +103,7 @@ wes_challenge_incor
 
 **Script:**  
 [run_pipeline.sh](scripts/run_pipeline.sh)  
-▶️ `./scripts/run_pipeline.sh <Número de núcleos de processamento>`
+`./scripts/run_pipeline.sh <Número de núcleos de processamento>`
 
 Cada etapa do pipeline é descrita a seguir e pode ser executada isoladamente a partir do diretório principal wes_challenge_incor!
 
@@ -132,9 +132,9 @@ wes_challenge_incor/
 ├── results/  
 ├── logs/   
 
-**Script:**  
+**Script ▶️:**  
 [coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)  
-▶️ `./scripts/coverage_mosdepth.sh`
+`./scripts/coverage_mosdepth.sh`
 
 **Log gerado para amostra NA06994 [mosdepth.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**  
 ```
@@ -170,9 +170,9 @@ wes_challenge_incor/
 │  
 ├── logs/         
 
-**Script:**  
-[coverage_summary_and_histogram.R](scripts/coverage_summary_and_histogram.R)
-▶️ `Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz`
+**Script ▶️:**  
+[coverage_summary_and_histogram.R](scripts/coverage_summary_and_histogram.R)  
+`Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz`
 
 **Log gerado para amostra NA06994 [exploratory_analysis.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_exploratory_analysis.log):**  
 
@@ -224,9 +224,9 @@ wes_challenge_incor/
 │  
 ├── logs/  
 
-**Script:**  
+**Script ▶️:**  
 [sex_inference.R](scripts/sex_inference.R)  
-▶️ `Rscript scripts/sex_inference.R <results/<sample>.mosdepth.summary.txt>`
+`Rscript scripts/sex_inference.R <results/<sample>.mosdepth.summary.txt>`
 
 **Lógicas de Classificação Utilizadas:**  
 chrX ≈ 2× autosomos, chrY ≈ 0 =	Female (XX)  
@@ -292,9 +292,9 @@ wes_challenge_incor/
 │  
 ├── logs/      
 
-**Script:**  
-[convert_cram_to_bam.sh](scripts/convert_cram_to_bam.sh)
-▶️ `./scripts/convert_cram_to_bam.sh`
+**Script ▶️:**  
+[convert_cram_to_bam.sh](scripts/convert_cram_to_bam.sh)  
+`./scripts/convert_cram_to_bam.sh`
 
 **Log gerado na amostra NA06994 [converted_cram_to_bam.log](logs/converted_cram_to_bam.log):**  
 ```
@@ -332,9 +332,9 @@ wes_challenge_incor/
 ├── logs/      
 
  
-**Script:**  
+**Script ▶️:**  
 [contamination_verifybamid.sh](scripts/contamination_verifybamid.sh)  
-▶️ `./scripts/contamination_verifybamid.sh` 
+`./scripts/contamination_verifybamid.sh` 
 
 **Log gerado na amostra NA06994 [automation_verifybamid.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_automation_verifybamid.log):**  
 ```
