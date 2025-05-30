@@ -131,15 +131,15 @@ wes_challenge_incor/
 ├── logs/   
 
 **Script:**  
-[coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)
+[coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)  
 Execução: `./scripts/coverage_mosdepth.sh`
 
-**Log gerado para amostra NA06994 [log.file](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**
-→ CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
-→ BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
-→ Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa
-→ Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth
-[Fri May 30 11:16:47 -03 2025] Coverage calculation completed for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+**Log gerado para amostra NA06994 [log.file](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**  
+→ CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
+→ BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed  
+→ Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa  
+→ Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth  
+[Fri May 30 11:16:47 -03 2025] Coverage calculation completed for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome  
 
 **Resultados gerados na amostra NA06994**
 results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.mosdepth.global.dist.txt  
