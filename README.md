@@ -58,7 +58,7 @@ wes_challenge_incor
 
 **Script:**  
 [download_all.sh](scripts/download_all.sh)  
-Execução: `./script/download_all.sh`
+▶️ `./script/download_all.sh`
 
 **Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
 **Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
@@ -103,7 +103,7 @@ wes_challenge_incor
 
 **Script:**  
 [run_pipeline.sh](scripts/run_pipeline.sh)  
-Execução: `./scripts/run_pipeline.sh <Número de núcleos de processamento>`
+▶️ `./scripts/run_pipeline.sh <Número de núcleos de processamento>`
 
 Cada etapa do pipeline é descrita a seguir e pode ser executada isoladamente a partir do diretório principal wes_challenge_incor!
 
@@ -117,7 +117,7 @@ O cálculo da cobertura das regiões exônicas foi realizado utilizando como ent
 **Ambiente:**  
 wes_qc_env
 
-**Estrutura Esperada para Execução:**  
+**Estrutura Esperada para Execução 📁:**  
 wes_challenge_incor/  
 ├── data/  
 │   ├── NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram       
@@ -134,7 +134,7 @@ wes_challenge_incor/
 
 **Script:**  
 [coverage_mosdepth.sh](scripts/coverage_mosdepth.sh)  
-Execução: `./scripts/coverage_mosdepth.sh`
+▶️ `./scripts/coverage_mosdepth.sh`
 
 **Log gerado para amostra NA06994 [mosdepth.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth.log):**  
 ```
@@ -160,7 +160,7 @@ A análise exploratória foi realizada com funções nativas da linguagem R, uti
 **Ambiente:**  
 wes_qc_env
 
-**Estrutura Esperada para Execução:**  
+**Estrutura Esperada para Execução 📁:**  
 wes_challenge_incor/  
 ├── results/  
 │   └── NA06994.regions.bed.gz  
@@ -172,7 +172,7 @@ wes_challenge_incor/
 
 **Script:**  
 [coverage_summary_and_histogram.R](scripts/coverage_summary_and_histogram.R)
-Execução: Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz``
+▶️ `Rscript scripts/exploratory_analysis_coverage.R results/NA06994.regions.bed.gz`
 
 **Log gerado para amostra NA06994 [exploratory_analysis.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_exploratory_analysis.log):**  
 
@@ -214,7 +214,7 @@ A inferência de sexo genético foi realizada com base na cobertura dos cromosso
 **Ambiente:**  
 wes_qc_env
 
-**Estrutura Esperada para Execução:**  
+**Estrutura Esperada para Execução 📁:**  
 wes_challenge_incor/  
 ├── results/  
 │   └── NA06994.mosdepth.summary.txt   
@@ -226,7 +226,7 @@ wes_challenge_incor/
 
 **Script:**  
 [sex_inference.R](scripts/sex_inference.R)  
-`Rscript scripts/sex_inference.R <results/<sample>.mosdepth.summary.txt>`
+▶️ `Rscript scripts/sex_inference.R <results/<sample>.mosdepth.summary.txt>`
 
 **Lógicas de Classificação Utilizadas:**  
 chrX ≈ 2× autosomos, chrY ≈ 0 =	Female (XX)  
@@ -273,20 +273,12 @@ Como o verifyBamID necessita de arquivos .bam. Foram realizados os dois processo
 Todos os scripts estão organizados no diretório scripts/. As saídas são organizadas em logs/ e results/.
 
 ### Conversão de CRAM para BAM
-Arquivos .cram de amostras de exoma são convertidos para .bam com uso de referência genômica completa. Cada .bam é também indexado (.bai) e os logs são salvos separadamente.
+Arquivos _.cram_ de amostras de exoma são convertidos para .bam com uso de referência genômica completa. Cada _.bam_ é também indexado (_.bai_) e os logs são salvos separadamente.
 
 **Ambiente:**  
 wes_qc_env
 
-**Script:**  
-[convert_cram_to_bam.sh](scripts/convert_cram_to_bam.sh)
-
-**Requisitos:**  
-samtools ≥ v1.10  
-Arquivo CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram   
-Arquivo FASTA de referência com .fai (ex: GRCh38_full_analysis_set_plus_decoy_hla.fa)
-
-**strutura Esperada para Execução:**  
+**strutura Esperada para Execução 📁:**  
 wes_challenge_incor/  
 ├── data/  
 │   ├── NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram      
@@ -300,40 +292,31 @@ wes_challenge_incor/
 │  
 ├── logs/      
 
-**Execução:**   
-`./scripts/convert_cram_to_bam.sh`
+**Script:**  
+[convert_cram_to_bam.sh](scripts/convert_cram_to_bam.sh)
+▶️ `./scripts/convert_cram_to_bam.sh`
 
-**Saídas esperadas:**
-* `data/_sample_.bam`
-* `data/_sample_.bam.bai`
-* `logs/convert_cram_to_bam.log`
-
-**Resultaddos gerados na amostra NA06994[logfile](logs/step4_convert_cram_to_bam.log):**  
+**Log gerado na amostra NA06994 [converted_cram_to_bam.log](logs/converted_cram_to_bam.log):**  
+```
 Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...  
 [Sat May 17 21:33:45 -03 2025] Starting CRAM to BAM conversion: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram  
 [Sat May 17 21:34:52 -03 2025] Indexing BAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam  
 [Sat May 17 21:35:29 -03 2025] Conversion and indexing completed successfully.  
 BAM generated: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam  
-All CRAM files have been converted.  
+All CRAM files have been converted.
+```
+
+**Resultados gerados na amostra NA06994:**  
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome  
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam.bai  
+
 
 ### Verificação de Contaminação com verifyBamID
-
 
 **Ambiente:**  
 verifybamID_env
 
-**Script:**  
-[contamination_verifybamid.sh](scripts/contamination_verifybamid.sh)
-
-**Requisitos:**
-* verifyBamID ≥ v1.1.3  
-* Arquivo BAM: data/NA06994.bam  
-* Arquivo .bai: data/NA06994.bam.bai  
-* Arquivo VCF filtrado com variantes bialélicas comuns: data/hapmap_filtered.vcf.gz  
-* Índice .csi do VCF: data/hapmap_filtered.vcf.gz.csi  
-* Arquivo BED com regiões-alvo do exoma (opcional, se usado no script):   
-
-**Estrutura Esperada para Execução:**  
+**Estrutura Esperada para Execução 📁:**  
 wes_challenge_incor/  
 ├── data/  
 │   ├── NA06994.bam                            
@@ -348,19 +331,64 @@ wes_challenge_incor/
 │  
 ├── logs/      
 
-  
-**Execução:**  
-`./scripts/contamination_verifybamid.sh`
+ 
+**Script:**  
+[contamination_verifybamid.sh](scripts/contamination_verifybamid.sh)  
+▶️ `./scripts/contamination_verifybamid.sh` 
 
-**Saídas esperadas:**
-* results/<sample>_verifybam.selfSM
-* results/<sample>_verifybam.depthSM
-* logs/
+**Log gerado na amostra NA06994 [automation_verifybamid.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_automation_verifybamid.log):**  
+```
+[Fri May 30 11:16:54 -03 2025] Filtered VCF already exists. Skipping filtering.
+[Fri May 30 11:16:54 -03 2025] Starting sample: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 11:16:54 -03 2025] Running verifyBamID for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
 
-**Arquivos gerados na amostra NA06994 [logfile](logs/NA06994_verifybam.log):**  
-NA06994_verifybam.depthSM: Este arquivo registra a profundidade de cobertura (DP) da amostra em cada posição do VCF analisado. É útil para diagnósticos e para entender a distribuição da profundidade nas regiões genotipadas.  
+Available Options
+                             Input Files : --vcf [data/hapmap_filtered.vcf.gz],
+                                           --bam [data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam],
+                                           --bai [], --subset [], --smID []
+                    VCF analysis options : --genoError [1.0e-03],
+                                           --minAF [0.01],
+                                           --minCallRate [0.50]
+   Individuals to compare with chip data : --site, --self, --best
+          Chip-free optimization options : --free-none, --free-mix [ON],
+                                           --free-refBias, --free-full
+          With-chip optimization options : --chip-none, --chip-mix [ON],
+                                           --chip-refBias, --chip-full
+                    BAM analysis options : --ignoreRG [ON],
+                                           --ignoreOverlapPair, --noEOF,
+                                           --precise [ON], --minMapQ [10],
+                                           --maxDepth [100], --minQ [13],
+                                           --maxQ [40], --grid [0.05]
+                 Modeling Reference Bias : --refRef [1.00], --refHet [0.50],
+                                           --refAlt [0.00]
+                          Output options : --out [results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam],
+                                           --verbose
+                               PhoneHome : --noPhoneHome,
+                                           --phoneHomeThinning [50]
 
-NA06994_verifybam.selfSM: Este arquivo contém as estimativas de contaminação genômica e ancestralidade da amostra, com base na comparação entre o BAM analisado e o painel de variantes de referência (VCF). A coluna _FREEMIX_ determina a fração estimada de contaminação.  
+WARNING : Skipping no-autosomal marker chrX:233451
+WARNING : Skipping no-autosomal marker chrX:238008
+WARNING : Skipping no-autosomal marker chrX:238086
+WARNING : Skipping no-autosomal marker chrX:253138
+WARNING : Skipping no-autosomal marker chrX:253255
+verifyBamID 1.1.3 -- verify identity and purity of sequence data
+(c) 2010-2014 Hyun Min Kang, Goo Jun, and Goncalo Abecasis
+
+
+WARNING -
+--self option was autotomatically turned on by default. Specify --best option if you wanted to check across all possible samples in the VCF
+[Fri May 30 12:12:35 -03 2025] Completed: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.selfSM
+[Fri May 30 12:12:35 -03 2025] All analyses completed.
+```
+**Resultados gerados na amostra NA06994:**  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.log  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.depthSM  
+results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.selfSM  
+
+**Descrição dos arquivos gerados:**   
+verifybam.log: Log gerado pela execução interna do verifybam. Arquivo mais detalhado que o log padrão.
+verifybam.depthSM: Registro da profundidade de cobertura (DP) da amostra em cada posição do VCF analisado. É útil para diagnósticos e para entender a distribuição da profundidade nas regiões genotipadas.  
+verifybam.selfSM: Registro das estimativas de contaminação genômica e ancestralidade da amostra, com base na comparação entre o BAM analisado e o painel de variantes de referência (VCF). A coluna _FREEMIX_ determina a fração estimada de contaminação.  
 
 **CONCLUSÃO:**  
 A amostra NA06994 apresentou uma estimativa de contaminação (_FREEMIX_) de 0,00035, ou seja, 0,035%. Esse valor está muito abaixo do limite de tolerância geralmente aceito (2%), indicando que não há evidência de contaminação significativa na amostra. Portanto, os dados podem ser considerados confiáveis para análises genômicas subsequentes.
@@ -368,3 +396,7 @@ A amostra NA06994 apresentou uma estimativa de contaminação (_FREEMIX_) de 0,0
 ---
 ## Referências:
 Liu, S., Zeng, Y., Wang, C., Zhang, Q., Chen, M., Wang, X., ... & Bu, F. (2022). seGMM: A new tool for gender determination from massively parallel sequencing data. Frontiers in Genetics, 13, 850804.  
+
+### Fim e Lembre-se:  
+**"Sucesso nem sempre é sinal de competência, assim como o fracasso nem sempre reflete incompetência".**  
+Em _O Andar do Bêbado_, por Leonard Mlodinow
