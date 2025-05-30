@@ -73,12 +73,86 @@ A integridade dos arquivos baixados foi realizada por meio da comparação de se
 **Arquivo .cram.crai:** 15a6576f46f51c37299fc004ed47fcd9  
 **Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
 
-**Resultados (log) gerados na amostra NA06994 [download_files.log](logs/download_files.log):**  
-Verificando integridade dos arquivos com MD5...  
-NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK  
-NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK  
-hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK  
-Download, indexing and verification completed successfully!
+**Log gerado na amostra NA06994 [download_files.log](logs/download_files.log):**  
+```
+[Fri May 30 14:05:33 -03 2025] Starting download script...
+[Fri May 30 14:05:33 -03 2025] Downloading reference genome (GRCh38 + decoy + HLA)...
+--2025-05-30 14:05:33--  https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
+Resolving ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)... 193.62.193.167
+Connecting to ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)|193.62.193.167|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3263683042 (3.0G)
+Saving to: ‘GRCh38_full_analysis_set_plus_decoy_hla.fa’
+
+GRCh38_full_analysi 100%[===================>]   3.04G  9.74MB/s    in 4m 12s
+
+2025-05-30 14:09:48 (12.3 MB/s) - ‘GRCh38_full_analysis_set_plus_decoy_hla.fa’ saved [3263683042/3263683042]
+
+[Fri May 30 14:09:48 -03 2025] Indexing reference genome...
+[Fri May 30 14:10:01 -03 2025] Downloading alignment files (CRAM and CRAI)...
+--2025-05-30 14:10:01--  http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
+Resolving ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)... 193.62.193.167
+Connecting to ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)|193.62.193.167|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2988269180 (2.8G)
+Saving to: ‘NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram’
+
+NA06994.alt_bwamem_ 100%[===================>]   2.78G  14.1MB/s    in 4m 4s
+
+2025-05-30 14:14:06 (11.7 MB/s) - ‘NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram’ saved [2988269180/2988269180]
+
+--2025-05-30 14:14:06--  http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai
+Resolving ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)... 193.62.193.167
+Connecting to ftp.1000genomes.ebi.ac.uk (ftp.1000genomes.ebi.ac.uk)|193.62.193.167|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 234297 (229K)
+Saving to: ‘NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai’
+
+NA06994.alt_bwamem_ 100%[===================>] 228.81K   272KB/s    in 0.8s
+
+2025-05-30 14:14:07 (272 KB/s) - ‘NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai’ saved [234297/234297]
+
+[Fri May 30 14:14:07 -03 2025] Downloading BED file (Twist Exome v2.0.2)...
+--2025-05-30 14:14:07--  https://www.twistbioscience.com/sites/default/files/resources/2022-12/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
+Resolving www.twistbioscience.com (www.twistbioscience.com)... 104.18.247.53, 104.18.248.53, 2606:4700::6812:f735, ...
+Connecting to www.twistbioscience.com (www.twistbioscience.com)|104.18.247.53|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 87562966 (84M) [application/vnd.realvnc.bed]
+Saving to: ‘hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed’
+
+hg38_exome_v2.0.2_t 100%[===================>]  83.51M   100MB/s    in 0.8s
+
+2025-05-30 14:14:08 (100 MB/s) - ‘hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed’ saved [87562966/87562966]
+
+[Fri May 30 14:14:08 -03 2025] Downloading VCF file and its index (HapMap 3.3, hg38)...
+--2025-05-30 14:14:08--  https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz
+Resolving storage.googleapis.com (storage.googleapis.com)... 142.250.219.251, 172.217.29.123, 142.250.78.123, ...
+Connecting to storage.googleapis.com (storage.googleapis.com)|142.250.219.251|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 62043448 (59M) [text/x-vcard]
+Saving to: ‘hapmap_3.3.hg38.vcf.gz’
+
+hapmap_3.3.hg38.vcf 100%[===================>]  59.17M  18.7MB/s    in 3.2s
+
+2025-05-30 14:14:12 (18.7 MB/s) - ‘hapmap_3.3.hg38.vcf.gz’ saved [62043448/62043448]
+
+--2025-05-30 14:14:12--  https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz.tbi
+Resolving storage.googleapis.com (storage.googleapis.com)... 172.217.29.91, 172.217.29.123, 172.217.30.91, ...
+Connecting to storage.googleapis.com (storage.googleapis.com)|172.217.29.91|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1552123 (1.5M) [application/octet-stream]
+Saving to: ‘hapmap_3.3.hg38.vcf.gz.tbi’
+
+hapmap_3.3.hg38.vcf 100%[===================>]   1.48M  1.67MB/s    in 0.9s
+
+2025-05-30 14:14:13 (1.67 MB/s) - ‘hapmap_3.3.hg38.vcf.gz.tbi’ saved [1552123/1552123]
+
+[Fri May 30 14:14:13 -03 2025] Verifying file integrity with MD5...
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram: OK
+NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai: OK
+hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed: OK
+[Fri May 30 14:14:19 -03 2025] Download, indexing and verification completed successfully!
+```
 
 ---
 ## 🔁 Automação
