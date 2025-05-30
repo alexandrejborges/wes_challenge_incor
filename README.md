@@ -48,14 +48,17 @@ Informações detalhadas sobre os scripts podem ser encontradas nas próximas se
 
 ---
 ## (Preparação) — Download dos arquivos necessários
-Para a execução do pipeline com a amostra NA06994, foram necessários de seis arquivos públicos obtidos a partir de repositórios oficiais. Ambos foram baixados com script abaixo e armazenados na pasta data/+.
+Para a execução do pipeline com a amostra NA06994, foram necessários de seis arquivos públicos obtidos a partir de repositórios oficiais. Ambos foram baixados com script abaixo e armazenados na pasta _data/_.
 
 **Ambiente:**  
-ative o ambiente _wes_qc_env_: `conda activate wes_qc_env`  
+wes_qc_env  
+
+**Diretório de Execução:**  
+wes_challenge_incor
 
 **Script:**  
 [download_all.sh](scripts/download_all.sh)  
-Execute: `./script/download_all.sh`
+Execução: `./script/download_all.sh`
 
 **Arquivo de alinhamento (.cram):** [GRCh38DH.20150826.CEU.exome.cram](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram)  
 **Índice do alinhamento (.cram.crai):** [GRCh38DH.20150826.CEU.exome.cram.crai](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/data/CEU/NA06994/exome_alignment/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram.crai)  
@@ -80,22 +83,30 @@ Download, indexing and verification completed successfully!
 ---
 ## 🔁 Automação
 
-O script `run_pipeline.sh` executa automaticamente todas as etapas do pipeline de controle de qualidade para dados de WES. Podendo ser utilizado para mais de uma amostra se necessário. O script deve ser executado a partir do diretório raiz do projeto (`wes_challenge_incor/`) com ambiente `wes_qc_env`.
+O script [run_pipeline.sh](run_pipeline.sh) executa automaticamente todas as etapas do pipeline de controle de qualidade. Ele pode ser utilizado para processar múltiplas amostras e permite a definição do número de núcleos de processamento a ser utilizado (caso especificado).
 
 ### 🔧 O que ele faz:
 
-1. Calcula a cobertura com o mosdepth para cada `.cram` em `data/`  
+1. Calcula a cobertura com o mosdepth para cada _.cram_ em _data/_  
 2. Executa a análise exploratória de cobertura e gera histogramas com R  
 3. Realiza a inferência de sexo genético com base na razão de cobertura dos cromossomos X e Y  
-4. Converte arquivos `.cram` para `.bam` e gera os arquivos `.bai`  
-5. Estima a contaminação usando `verifyBamID`  
-
-As etapas individuais realizadas podem ser verificadas abaixo.
+4. Converte arquivos _.cram_ para _.bam_ e gera os arquivos _.bai_  
+5. Estima a contaminação usando _verifyBamID_
+6. Identificação de possíveis erros
+   
 ### ▶️ Como executar:
+**Ambiente:**  
+wes_qc_env 
 
-```bash
-bash run_pipeline.sh
-```
+**Diretório de Execução:**  
+wes_challenge_incor
+
+**Script:**  
+[run_pipeline.sh](scripts/run_pipeline.sh)  
+Execução: `./scripts/run_pipeline.sh <Número de núcleos de processamento>`
+
+Cada etapa do pipeline é descrita a seguir e pode ser executada isoladamente!
+
 ---
 ## Análise de Cobertura do Exoma com Mosdepth 
 Este pipeline realiza o cálculo da cobertura de regiões exônicas utilizando o software Mosdepth e em seguida (separadamente), a análise exploratória dos resultados em R.  
