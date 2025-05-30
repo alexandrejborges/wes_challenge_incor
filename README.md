@@ -36,13 +36,13 @@ wes_challenge_incor/
 
 **Scripts necessários 📄:**  
 └── scripts  
-    ├── contamination_verifybamid.sh  
-    ├── convert_cram_to_bam.sh  
-    ├── coverage_mosdepth.sh  
-    ├── coverage_summary_and_histogram.R  
-    ├── download_all.sh  
-    ├── run_pipeline.sh  
-    └── sex_inference.R  
+│   ├── contamination_verifybamid.sh  
+│   ├── convert_cram_to_bam.sh  
+│   ├── coverage_mosdepth.sh  
+│   ├── coverage_summary_and_histogram.R  
+│   ├── download_all.sh  
+│   ├── run_pipeline.sh  
+│   └── sex_inference.R  
 
 Informações detalhadas sobre os scripts podem ser encontradas nas próximas seções  
 
