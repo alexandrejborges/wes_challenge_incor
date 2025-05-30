@@ -412,9 +412,38 @@ wes_challenge_incor/
 
 **Log gerado na amostra NA06994 [automation_verifybamid.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_automation_verifybamid.log):**  
 ```
-[Fri May 30 11:16:54 -03 2025] Filtered VCF already exists. Skipping filtering.
-[Fri May 30 11:16:54 -03 2025] Starting sample: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
-[Fri May 30 11:16:54 -03 2025] Running verifyBamID for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
+Using 16 threads for supported steps.
+========== [1] Running Mosdepth ==========
+[Fri May 30 14:21:04 -03 2025] → Running Mosdepth for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+→ CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
+→ BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
+→ Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa
+→ Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth
+[Fri May 30 14:23:08 -03 2025] Coverage calculation completed for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:23:08 -03 2025] [OK!] Mosdepth Calculation Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+========== [2] Exploratory Analysis + Histogram (R) ==========
+[Fri May 30 14:23:08 -03 2025] → Exploratory coverage analysis for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:23:16 -03 2025] [OK!] Coverage Analysis Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== [3] Genetic Sex Inference (R) ==========
+[Fri May 30 14:23:16 -03 2025] → Inferring genetic sex for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:23:17 -03 2025] [OK!]Sex Inference Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== [4] Converting CRAM to BAM ==========
+Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
+[Fri May 30 14:23:17 -03 2025] Starting CRAM to BAM conversion: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
+[Fri May 30 14:24:25 -03 2025] Indexing BAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
+[Fri May 30 14:25:02 -03 2025] Conversion and indexing completed successfully.
+BAM generated: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
+All CRAM files have been converted.
+[Fri May 30 14:25:02 -03 2025] [OK!] Convertion Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== [5] Estimating Contamination with verifyBamID ==========
+[Fri May 30 14:25:02 -03 2025] → Activating verifybamid_env...
+[Fri May 30 14:25:03 -03 2025] Filtering original VCF for common biallelic SNPs...
+[Fri May 30 14:25:18 -03 2025] Filtered VCF saved to data/hapmap_filtered.vcf.gz
+[Fri May 30 14:25:18 -03 2025] Starting sample: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:25:18 -03 2025] Running verifyBamID for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
 
 Available Options
                              Input Files : --vcf [data/hapmap_filtered.vcf.gz],
@@ -451,8 +480,13 @@ verifyBamID 1.1.3 -- verify identity and purity of sequence data
 
 WARNING -
 --self option was autotomatically turned on by default. Specify --best option if you wanted to check across all possible samples in the VCF
-[Fri May 30 12:12:35 -03 2025] Completed: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.selfSM
-[Fri May 30 12:12:35 -03 2025] All analyses completed.
+[Fri May 30 15:20:45 -03 2025] Completed: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.selfSM
+[Fri May 30 15:20:45 -03 2025] All analyses completed.
+[Fri May 30 15:20:45 -03 2025] → Re-activating wes_qc_env...
+[Fri May 30 15:20:48 -03 2025] [OK!] Estimating Contamination Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== Pipeline completed successfully ==========
+[OK!] All steps completed successfully without reported errors.
 ```
 **Resultados gerados na amostra NA06994:**  
 results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.log  
