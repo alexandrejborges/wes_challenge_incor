@@ -73,7 +73,7 @@ A integridade dos arquivos baixados foi realizada por meio da comparação de se
 **Arquivo .cram.crai:** 15a6576f46f51c37299fc004ed47fcd9  
 **Arquivo .bed:** c3a7cea67f992e0412db4b596730d276
 
-**Log gerado na amostra NA06994 [download_files.log](logs/download_files.log):**  
+**Log gerado na amostra NA06994:** [download_files.log](logs/download_files.log):  
 ```
 [Fri May 30 14:05:33 -03 2025] Starting download script...
 [Fri May 30 14:05:33 -03 2025] Downloading reference genome (GRCh38 + decoy + HLA)...
@@ -178,6 +178,85 @@ wes_challenge_incor
 **Script:**  
 [run_pipeline.sh](scripts/run_pipeline.sh)  
 `./scripts/run_pipeline.sh <Número de núcleos de processamento>`
+
+**Log gerado para a automação com a amostra NA06994:** [pipeline_20250530_142104.log](logs/pipeline_20250530_142104.log)
+```
+Using 16 threads for supported steps.
+========== [1] Running Mosdepth ==========
+[Fri May 30 14:21:04 -03 2025] → Running Mosdepth for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+→ CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
+→ BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
+→ Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa
+→ Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth
+[Fri May 30 14:23:08 -03 2025] Coverage calculation completed for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:23:08 -03 2025] [OK!] Mosdepth Calculation Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+========== [2] Exploratory Analysis + Histogram (R) ==========
+[Fri May 30 14:23:08 -03 2025] → Exploratory coverage analysis for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:23:16 -03 2025] [OK!] Coverage Analysis Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== [3] Genetic Sex Inference (R) ==========
+[Fri May 30 14:23:16 -03 2025] → Inferring genetic sex for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:23:17 -03 2025] [OK!]Sex Inference Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== [4] Converting CRAM to BAM ==========
+Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
+[Fri May 30 14:23:17 -03 2025] Starting CRAM to BAM conversion: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
+[Fri May 30 14:24:25 -03 2025] Indexing BAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
+[Fri May 30 14:25:02 -03 2025] Conversion and indexing completed successfully.
+BAM generated: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
+All CRAM files have been converted.
+[Fri May 30 14:25:02 -03 2025] [OK!] Convertion Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== [5] Estimating Contamination with verifyBamID ==========
+[Fri May 30 14:25:02 -03 2025] → Activating verifybamid_env...
+[Fri May 30 14:25:03 -03 2025] Filtering original VCF for common biallelic SNPs...
+[Fri May 30 14:25:18 -03 2025] Filtered VCF saved to data/hapmap_filtered.vcf.gz
+[Fri May 30 14:25:18 -03 2025] Starting sample: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+[Fri May 30 14:25:18 -03 2025] Running verifyBamID for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
+
+Available Options
+                             Input Files : --vcf [data/hapmap_filtered.vcf.gz],
+                                           --bam [data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam],
+                                           --bai [], --subset [], --smID []
+                    VCF analysis options : --genoError [1.0e-03],
+                                           --minAF [0.01],
+                                           --minCallRate [0.50]
+   Individuals to compare with chip data : --site, --self, --best
+          Chip-free optimization options : --free-none, --free-mix [ON],
+                                           --free-refBias, --free-full
+          With-chip optimization options : --chip-none, --chip-mix [ON],
+                                           --chip-refBias, --chip-full
+                    BAM analysis options : --ignoreRG [ON],
+                                           --ignoreOverlapPair, --noEOF,
+                                           --precise [ON], --minMapQ [10],
+                                           --maxDepth [100], --minQ [13],
+                                           --maxQ [40], --grid [0.05]
+                 Modeling Reference Bias : --refRef [1.00], --refHet [0.50],
+                                           --refAlt [0.00]
+                          Output options : --out [results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam],
+                                           --verbose
+                               PhoneHome : --noPhoneHome,
+                                           --phoneHomeThinning [50]
+
+WARNING : Skipping no-autosomal marker chrX:233451
+WARNING : Skipping no-autosomal marker chrX:238008
+WARNING : Skipping no-autosomal marker chrX:238086
+WARNING : Skipping no-autosomal marker chrX:253138
+WARNING : Skipping no-autosomal marker chrX:253255
+verifyBamID 1.1.3 -- verify identity and purity of sequence data
+(c) 2010-2014 Hyun Min Kang, Goo Jun, and Goncalo Abecasis
+
+
+WARNING -
+--self option was autotomatically turned on by default. Specify --best option if you wanted to check across all possible samples in the VCF
+[Fri May 30 15:20:45 -03 2025] Completed: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.selfSM
+[Fri May 30 15:20:45 -03 2025] All analyses completed.
+[Fri May 30 15:20:45 -03 2025] → Re-activating wes_qc_env...
+[Fri May 30 15:20:48 -03 2025] [OK!] Estimating Contamination Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
+---------------------------------------------------
+========== Pipeline completed successfully ==========
+[OK!] All steps completed successfully without reported errors.
+```
 
 Cada etapa do pipeline é descrita a seguir e pode ser executada isoladamente a partir do diretório principal wes_challenge_incor!
 
@@ -410,70 +489,12 @@ wes_challenge_incor/
 [contamination_verifybamid.sh](scripts/contamination_verifybamid.sh)  
 `./scripts/contamination_verifybamid.sh` 
 
-**Log gerado na amostra NA06994 [automation_verifybamid.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_automation_verifybamid.log):**  
+**Log gerado na amostra NA06994:** [automation_verifybamid.log](logs/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_automation_verifybamid.log):
 ```
-Using 16 threads for supported steps.
-========== [1] Running Mosdepth ==========
-[Fri May 30 14:21:04 -03 2025] → Running Mosdepth for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
-→ CRAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
-→ BED: data/hg38_exome_v2.0.2_targets_sorted_validated.re_annotated.bed
-→ Reference: data/GRCh38_full_analysis_set_plus_decoy_hla.fa
-→ Output Prefix: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_mosdepth
-[Fri May 30 14:23:08 -03 2025] Coverage calculation completed for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
-[Fri May 30 14:23:08 -03 2025] [OK!] Mosdepth Calculation Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
-========== [2] Exploratory Analysis + Histogram (R) ==========
-[Fri May 30 14:23:08 -03 2025] → Exploratory coverage analysis for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
-[Fri May 30 14:23:16 -03 2025] [OK!] Coverage Analysis Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
----------------------------------------------------
-========== [3] Genetic Sex Inference (R) ==========
-[Fri May 30 14:23:16 -03 2025] → Inferring genetic sex for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
-[Fri May 30 14:23:17 -03 2025] [OK!]Sex Inference Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
----------------------------------------------------
-========== [4] Converting CRAM to BAM ==========
-Converting NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
-[Fri May 30 14:23:17 -03 2025] Starting CRAM to BAM conversion: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.cram
-[Fri May 30 14:24:25 -03 2025] Indexing BAM: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
-[Fri May 30 14:25:02 -03 2025] Conversion and indexing completed successfully.
-BAM generated: data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam
-All CRAM files have been converted.
-[Fri May 30 14:25:02 -03 2025] [OK!] Convertion Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
----------------------------------------------------
-========== [5] Estimating Contamination with verifyBamID ==========
-[Fri May 30 14:25:02 -03 2025] → Activating verifybamid_env...
 [Fri May 30 14:25:03 -03 2025] Filtering original VCF for common biallelic SNPs...
 [Fri May 30 14:25:18 -03 2025] Filtered VCF saved to data/hapmap_filtered.vcf.gz
 [Fri May 30 14:25:18 -03 2025] Starting sample: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
 [Fri May 30 14:25:18 -03 2025] Running verifyBamID for NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome...
-
-Available Options
-                             Input Files : --vcf [data/hapmap_filtered.vcf.gz],
-                                           --bam [data/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome.bam],
-                                           --bai [], --subset [], --smID []
-                    VCF analysis options : --genoError [1.0e-03],
-                                           --minAF [0.01],
-                                           --minCallRate [0.50]
-   Individuals to compare with chip data : --site, --self, --best
-          Chip-free optimization options : --free-none, --free-mix [ON],
-                                           --free-refBias, --free-full
-          With-chip optimization options : --chip-none, --chip-mix [ON],
-                                           --chip-refBias, --chip-full
-                    BAM analysis options : --ignoreRG [ON],
-                                           --ignoreOverlapPair, --noEOF,
-                                           --precise [ON], --minMapQ [10],
-                                           --maxDepth [100], --minQ [13],
-                                           --maxQ [40], --grid [0.05]
-                 Modeling Reference Bias : --refRef [1.00], --refHet [0.50],
-                                           --refAlt [0.00]
-                          Output options : --out [results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam],
-                                           --verbose
-                               PhoneHome : --noPhoneHome,
-                                           --phoneHomeThinning [50]
-
-WARNING : Skipping no-autosomal marker chrX:233451
-WARNING : Skipping no-autosomal marker chrX:238008
-WARNING : Skipping no-autosomal marker chrX:238086
-WARNING : Skipping no-autosomal marker chrX:253138
-WARNING : Skipping no-autosomal marker chrX:253255
 verifyBamID 1.1.3 -- verify identity and purity of sequence data
 (c) 2010-2014 Hyun Min Kang, Goo Jun, and Goncalo Abecasis
 
@@ -482,11 +503,6 @@ WARNING -
 --self option was autotomatically turned on by default. Specify --best option if you wanted to check across all possible samples in the VCF
 [Fri May 30 15:20:45 -03 2025] Completed: results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.selfSM
 [Fri May 30 15:20:45 -03 2025] All analyses completed.
-[Fri May 30 15:20:45 -03 2025] → Re-activating wes_qc_env...
-[Fri May 30 15:20:48 -03 2025] [OK!] Estimating Contamination Finished: NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome
----------------------------------------------------
-========== Pipeline completed successfully ==========
-[OK!] All steps completed successfully without reported errors.
 ```
 **Resultados gerados na amostra NA06994:**  
 results/NA06994.alt_bwamem_GRCh38DH.20150826.CEU.exome_verifybam.log  
