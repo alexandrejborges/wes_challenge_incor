@@ -1,8 +1,6 @@
 # WES-QC: Controle de Qualidade para Sequenciamento de Exoma Completo
 ![Status](https://img.shields.io/badge/status-concluído-brightgreen) ![Bash](https://img.shields.io/badge/language-Bash-blue?logo=gnu-bash) ![R](https://img.shields.io/badge/language-R-1f425f?logo=r)
 
-# Pipeline de Controle de Qualidade WES
-
 Pipeline automatizado de controle de qualidade para dados de Whole Exome Sequencing (WES), com foco no cálculo de cobertura, inferência de sexo genético e estimativa de contaminação. Este projeto faz parte de um desafio técnico com base na amostra NA06994 do 1000 Genomes Project.
 
 ## Autor
